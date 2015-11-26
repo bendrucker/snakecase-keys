@@ -1,0 +1,34 @@
+{
+  "name": "snakecase-keys",
+  "main": "index.js",
+  "version": "0.0.0",
+  "description": "Convert an object's keys to snake case",
+  "license": "MIT",
+  "repository": "bendrucker/snakecase-keys",
+  "author": {
+    "name": "Ben Drucker",
+    "email": "bvdrucker@gmail.com",
+    "url": "bendrucker.me"
+  },
+  "scripts": {
+    "test": "standard && tape test.js"
+  },
+  "keywords": [
+    "snake",
+    "case",
+    "camel",
+    "keys",
+    "object"
+  ],
+  "devDependencies": {
+    "tape": "^4.0.0",
+    "standard": "^5.0.0"
+  },
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "map-obj": "~1.0.1",
+    "to-snake-case": "~0.1.2"
+  }
+}
