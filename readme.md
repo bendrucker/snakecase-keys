@@ -13,18 +13,18 @@ $ npm install --save snakecase-keys
 ## Usage
 
 ```js
-var Snake = require('snakecase-keys')
+var snakeCaseKeys = require('snakecase-keys')
 
-Snake({fooBar: 'baz'})
+snakeCaseKeys({fooBar: 'baz'})
 //=> {foo_bar: 'baz'}
 
-Snake({'foo-bar': true, nested: {fooBaz: 'bar'}});
+snakeCaseKeys({'foo-bar': true, nested: {fooBaz: 'bar'}});
 //=> {foo_bar: true, nested: {foo_baz: 'bar'}}
 ```
 
 ## API
 
-#### `Snake(obj)` -> `object`
+#### `snakeCaseKeys(obj)` -> `object`
 
 ##### obj
 
