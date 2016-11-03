@@ -17,6 +17,9 @@ var Snake = require('snakecase-keys')
 
 Snake({fooBar: 'baz'})
 //=> {foo_bar: 'baz'}
+
+Snake({'foo-bar': true, nested: {fooBaz: 'bar'}});
+//=> {foo_bar: true, nested: {foo_baz: 'bar'}}
 ```
 
 ## API
