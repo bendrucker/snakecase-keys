@@ -28,7 +28,7 @@
     "index.js"
   ],
   "dependencies": {
-    "map-obj": "~1.0.1",
+    "map-obj": "~2.0.0",
     "to-snake-case": "~0.1.2"
   }
 }
