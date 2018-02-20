@@ -33,6 +33,9 @@ Type: `object`
 
 An object to transform into snake case (keys only).
 
+## Related
+
+* [camelcase-keys](https://github.com/sindresorhus/camelcase-keys)
 
 ## License
 
