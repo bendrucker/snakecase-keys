@@ -40,7 +40,7 @@ Type: `object`
 
 ###### deep
 
-Type: `boolean`
+Type: `boolean` 
 Default: `true`
 
 Enables snake-casing of keys in nested objects.
