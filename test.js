@@ -8,22 +8,10 @@ test(function (t) {
   t.end()
 })
 
-test('It will not deeply convert when option is set', function (t) {
-  var sourceObject = {
-    topLevel: 'should get converted',
-    iHaveChildren: {
-      thatShouldNot: 'get converted'
-    }
-  }
-  var expectedObject = {
-    top_level: 'should get converted',
-    i_have_children: {
-      thatShouldNot: 'get converted'
-    }
-  }
-
-  var resultObject = Snake(sourceObject, { deep: false })
-
-  t.deepEqual(resultObject, expectedObject)
+test('shallow conversion with {deep: false}', function (t) {
+  t.deepEqual(
+    Snake({fooBar: {barBaz: 'qux'}}, {deep: false}),
+    {foo_bar: {barBaz: 'qux'}}
+  )
   t.end()
 })

@@ -38,13 +38,12 @@ An object to transform into snake case (keys only).
 *Optional*  
 Type: `object`
 
-Optional settings for the conversion.  Included options are:
+###### deep
 
-* deep
-    * Type: `boolean`
-    * Default: `true`
-    * If set to false, only the top-level keys will get converted.
-    * Example: `snakeCaseKeys({topLevel: { childLevel: 'not converted }}, { deep: false })` => `{ top_level: { childLevel: 'not converted}}`
+Type: `boolean`
+Default: `true`
+
+Enables snake-casing of keys in nested objects.
 
 ## Related
 
