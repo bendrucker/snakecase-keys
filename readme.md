@@ -24,7 +24,7 @@ snakeCaseKeys({'foo-bar': true, nested: {fooBaz: 'bar'}});
 
 ## API
 
-#### `snakeCaseKeys(obj)` -> `object`
+#### `snakeCaseKeys(obj, options)` -> `object`
 
 ##### obj
 
@@ -32,6 +32,18 @@ snakeCaseKeys({'foo-bar': true, nested: {fooBaz: 'bar'}});
 Type: `object`
 
 An object to transform into snake case (keys only).
+
+##### options
+
+*Optional*  
+Type: `object`
+
+###### deep
+
+Type: `boolean` 
+Default: `true`
+
+Enables snake-casing of keys in nested objects.
 
 ## Related
 
