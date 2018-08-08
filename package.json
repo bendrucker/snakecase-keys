@@ -28,7 +28,10 @@
     "index.js"
   ],
   "dependencies": {
-    "map-obj": "~2.0.0",
+    "map-obj": "~3.0.0",
     "to-snake-case": "~0.1.2"
+  },
+  "engines": {
+    "node": ">=6"
   }
 }
