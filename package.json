@@ -22,14 +22,14 @@
   ],
   "devDependencies": {
     "tape": "^4.0.0",
-    "standard": "^5.0.0"
+    "standard": "^11.0.1"
   },
   "files": [
     "index.js"
   ],
   "dependencies": {
     "map-obj": "~3.0.0",
-    "to-snake-case": "~0.1.2"
+    "to-snake-case": "~1.0.0"
   },
   "engines": {
     "node": ">=6"
