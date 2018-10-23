@@ -15,3 +15,10 @@ test('shallow conversion with {deep: false}', function (t) {
   )
   t.end()
 })
+
+test('arrays', function (t) {
+  var result = Snake({foo: [0, 1, 2]})
+  t.deepEqual(result, {foo: [0, 1, 2]})
+  t.ok(Array.isArray(result.foo))
+  t.end()
+})
