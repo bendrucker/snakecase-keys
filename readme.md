@@ -20,6 +20,12 @@ snakeCaseKeys({fooBar: 'baz'})
 
 snakeCaseKeys({'foo-bar': true, nested: {fooBaz: 'bar'}});
 //=> {foo_bar: true, nested: {foo_baz: 'bar'}}
+
+snakeCaseKeys({'foo-bar': true, 'foo-baz': 'bar'}, { exclude: ['foo-bar'] });
+//=> {foo-bar: true, foo_baz: 'bar'}}
+
+snakeCaseKeys({'fooBar': true, 'fooBaz': 'bar'}, { exclude: [/^foo/] });
+//=> {fooBar: true, fooBaz: 'bar'}}
 ```
 
 ## API
@@ -44,6 +50,13 @@ Type: `boolean`
 Default: `true`
 
 Enables snake-casing of keys in nested objects.
+
+###### exclude
+
+Type: `array[string]`  
+Default: `[]`
+
+Disabled snake-casing for excluded keys.
 
 ## Related
 
