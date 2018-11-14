@@ -3,16 +3,21 @@
 var map = require('map-obj')
 var snakeCase = require('to-snake-case')
 
-const has = (array, key) => array.some(x => typeof x === 'string' ? x === key : x.test(key));
-
 module.exports = function (obj, options) {
-  options = Object.assign({deep: true}, options)
-  const {exclude} = options;
+  options = Object.assign({deep: true, exclude: []}, options)
 
   return map(obj, function (key, val) {
-    if (!(exclude && has(exclude, key))) {
-      key = snakeCase(key);
-    }
-    return [key, val]
+    return [
+      matches(options.exclude, key) ? key : snakeCase(key),
+      val
+    ]
   }, options)
+}
+
+function matches (patterns, value) {
+  return patterns.some(function (pattern) {
+    return typeof pattern === 'string'
+      ? pattern === value
+      : pattern.test(value)
+  })
 }
