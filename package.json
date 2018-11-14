@@ -1,7 +1,7 @@
 {
   "name": "snakecase-keys",
   "main": "index.js",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Convert an object's keys to snake case",
   "license": "MIT",
   "repository": "bendrucker/snakecase-keys",
