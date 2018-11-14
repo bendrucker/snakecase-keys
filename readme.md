@@ -45,6 +45,13 @@ Default: `true`
 
 Enables snake-casing of keys in nested objects.
 
+###### exclude
+
+Type: `array[string || regexp]`  
+Default: `[]`
+
+An array of strings or regular expressions matching keys that will be excluded from snake-casing.
+
 ## Related
 
 * [camelcase-keys](https://github.com/sindresorhus/camelcase-keys)

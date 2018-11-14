@@ -22,3 +22,15 @@ test('arrays', function (t) {
   t.ok(Array.isArray(result.foo))
   t.end()
 })
+
+test('exclude', function (t) {
+  t.deepEqual(
+    Snake({ fooBar: 'baz', barBaz: 'qux' }, { exclude: ['fooBar'] }),
+    { fooBar: 'baz', bar_baz: 'qux' }
+  )
+  t.deepEqual(
+    Snake({ fooBar: 'baz', barBaz: 'qux' }, { exclude: [/^foo/, /^bar/] }),
+    { fooBar: 'baz', barBaz: 'qux' }
+  )
+  t.end()
+})
