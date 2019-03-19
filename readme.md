@@ -55,6 +55,7 @@ An array of strings or regular expressions matching keys that will be excluded f
 ## Related
 
 * [camelcase-keys](https://github.com/sindresorhus/camelcase-keys)
+* [kebabcase-keys](https://github.com/mattiloh/kebabcase-keys)
 
 ## License
 
