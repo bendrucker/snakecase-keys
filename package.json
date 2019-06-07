@@ -28,10 +28,10 @@
     "index.js"
   ],
   "dependencies": {
-    "map-obj": "~3.1.0",
-    "to-snake-case": "~1.0.0"
+    "map-obj": "^4.0.0",
+    "to-snake-case": "^1.0.0"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   }
 }
