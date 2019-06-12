@@ -11,7 +11,7 @@
     "url": "bendrucker.me"
   },
   "scripts": {
-    "test": "standard && tape test.js"
+    "test": "standard && tape test.js && tsd"
   },
   "keywords": [
     "snake",
@@ -21,8 +21,9 @@
     "object"
   ],
   "devDependencies": {
+    "standard": "^12.0.1",
     "tape": "^4.0.0",
-    "standard": "^12.0.1"
+    "tsd": "^0.7.3"
   },
   "files": [
     "index.js",
