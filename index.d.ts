@@ -15,7 +15,7 @@ declare namespace snakecaseKeys {
 }
 
 /**
-Convert object keys to s snake using [`to-snake-case`](https://github.com/ianstormtaylor/to-snake-case).
+Convert object keys to snake using [`to-snake-case`](https://github.com/ianstormtaylor/to-snake-case).
 @param input - Object or array of objects to snake-case.
 */
 declare function snakecaseKeys(
