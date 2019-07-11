@@ -34,3 +34,11 @@ test('exclude', function (t) {
   )
   t.end()
 })
+
+test('exclude Characters', function (t) {
+  t.deepEqual(
+    Snake({ 'fooBar.fooBar': 'baz', 'barBaz.barBaz': 'qux' }, { excludeCharacters: ['.'] }),
+    { 'foo_bar.foo_bar': 'baz', 'bar_baz.bar_baz': 'qux' }
+  )
+  t.end()
+})
