@@ -52,6 +52,15 @@ Default: `[]`
 
 An array of strings or regular expressions matching keys that will be excluded from snake-casing.
 
+###### excludeCharacters
+
+Type: `array[string]`  
+Default: `[]`
+exemple: `['.', '-']`
+
+An array of character elements that will be avoid by the snakecase function.
+exemple : foo-bar.barBaz => foo-bar.bar_baz
+
 ## Related
 
 * [camelcase-keys](https://github.com/sindresorhus/camelcase-keys)
