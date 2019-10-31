@@ -1,7 +1,7 @@
 import { expectType } from 'tsd';
 import camelcaseKeys = require('.');
 
-expectType<Array<{ [key: string]: unknown }>>(
+expectType<unknown[]>(
   camelcaseKeys([{ 'foo-bar': true }]),
 );
 
