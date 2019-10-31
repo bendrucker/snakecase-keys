@@ -19,9 +19,9 @@ Convert object keys to snake using [`to-snake-case`](https://github.com/ianstorm
 @param input - Object or array of objects to snake-case.
 */
 declare function snakecaseKeys(
-  input: ReadonlyArray<{ [key: string]: unknown }>,
+  input: ReadonlyArray<unknown>,
   options?: snakecaseKeys.Options,
-): Array<{ [key: string]: unknown }>;
+): unknown[];
 declare function snakecaseKeys(
   input: { [key: string]: unknown },
   options?: snakecaseKeys.Options,
