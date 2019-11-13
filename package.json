@@ -23,7 +23,7 @@
   "devDependencies": {
     "standard": "^14.0.0",
     "tape": "^4.0.0",
-    "tsd": "^0.9.0"
+    "tsd": "^0.11.0"
   },
   "files": [
     "index.js",
