@@ -2,7 +2,7 @@ declare namespace snakecaseKeys {
   interface Options {
     /**
 		Recurse nested objects and objects in arrays.
-		@default false
+		@default true
 		*/
     readonly deep?: boolean;
 
