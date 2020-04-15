@@ -1,42 +1,28 @@
 import {expectType} from 'tsd';
 import snakecaseKeys = require('.');
 
-const fooBarObject = {'foo-bar': true};
+const fooBarObject = {'fooBar': true};
 const camelFooBarObject = snakecaseKeys(fooBarObject);
 expectType<typeof fooBarObject>(camelFooBarObject);
 
-expectType<Array<{ [key: string]: unknown }>>(
-  snakecaseKeys([{ 'foo-bar': true }]),
-);
-
-expectType<{ [key: string]: unknown }>(snakecaseKeys({ 'foo-bar': true }));
-
-expectType<{ [key: string]: unknown }>(
-  snakecaseKeys({ 'foo-bar': true }, { deep: true }),
-);
-
-expectType<{ [key: string]: unknown }>(
-  snakecaseKeys({ 'foo-bar': true }, { exclude: ['foo', /bar/] }),
-);
-
-const fooBarArray = [{'foo-bar': true}];
+const fooBarArray = [{'fooBar': true}];
 const camelFooBarArray = snakecaseKeys(fooBarArray);
 expectType<typeof fooBarArray>(camelFooBarArray);
 
-expectType<Array<{[key in 'foo-bar']: true}>>(snakecaseKeys([{'foo-bar': true}]));
+expectType<Array<{[key in 'fooBar']: true}>>(snakecaseKeys([{'fooBar': true}]));
 
 expectType<string[]>(snakecaseKeys(['name 1', 'name 2']));
 
 expectType<string[]>(snakecaseKeys(['name 1', 'name 2'], {deep: true}));
 
-expectType<{[key in 'foo-bar']: true}>(snakecaseKeys({'foo-bar': true}));
+expectType<{[key in 'fooBar']: true}>(snakecaseKeys({'fooBar': true}));
 
-expectType<{[key in 'foo-bar']: true}>(
-	snakecaseKeys({'foo-bar': true}, {deep: true}),
+expectType<{[key in 'fooBar']: true}>(
+	snakecaseKeys({'fooBar': true}, {deep: true}),
 );
 
-expectType<{[key in 'foo-bar']: true}>(
-  snakecaseKeys({'foo-bar': true}, {exclude: ['foo', /bar/]}),
+expectType<{[key in 'fooBar']: true}>(
+	snakecaseKeys({'fooBar': true}, {exclude: ['foo', /bar/]}),
 );
 
 interface SomeObject {
