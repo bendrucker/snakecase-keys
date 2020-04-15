@@ -1,25 +1,48 @@
-import { expectType } from 'tsd';
+import {expectType} from 'tsd';
 import snakecaseKeys = require('.');
 
-interface TestInterface {
-  foo: boolean
+const fooBarObject = {'fooBar': true};
+const camelFooBarObject = snakecaseKeys(fooBarObject);
+expectType<typeof fooBarObject>(camelFooBarObject);
+
+const fooBarArray = [{'fooBar': true}];
+const camelFooBarArray = snakecaseKeys(fooBarArray);
+expectType<typeof fooBarArray>(camelFooBarArray);
+
+expectType<Array<{[key in 'fooBar']: true}>>(snakecaseKeys([{'fooBar': true}]));
+
+expectType<string[]>(snakecaseKeys(['name 1', 'name 2']));
+
+expectType<string[]>(snakecaseKeys(['name 1', 'name 2'], {deep: true}));
+
+expectType<{[key in 'fooBar']: true}>(snakecaseKeys({'fooBar': true}));
+
+expectType<{[key in 'fooBar']: true}>(
+	snakecaseKeys({'fooBar': true}, {deep: true}),
+);
+
+expectType<{[key in 'fooBar']: true}>(
+	snakecaseKeys({'fooBar': true}, {exclude: ['foo', /bar/]}),
+);
+
+interface SomeObject {
+	someProperty: string;
 }
 
-const test: TestInterface = { foo: false }
-expectType<{ [key: string]: unknown }>(
-  snakecaseKeys(test)
-)
+const someObj: SomeObject = {
+	someProperty: 'this should work'
+};
 
-expectType<Array<{ [key: string]: unknown }>>(
-  snakecaseKeys([{ 'foo-bar': true }]),
-);
+expectType<SomeObject>(snakecaseKeys(someObj));
+expectType<SomeObject[]>(snakecaseKeys([someObj]));
 
-expectType<{ [key: string]: unknown }>(snakecaseKeys({ 'foo-bar': true }));
+type SomeTypeAlias = {
+	someProperty: string;
+}
 
-expectType<{ [key: string]: unknown }>(
-  snakecaseKeys({ 'foo-bar': true }, { deep: true }),
-);
+const objectWithTypeAlias = {
+	someProperty: 'this should also work'
+};
 
-expectType<{ [key: string]: unknown }>(
-  snakecaseKeys({ 'foo-bar': true }, { exclude: ['foo', /bar/] }),
-);
+expectType<SomeTypeAlias>(snakecaseKeys(objectWithTypeAlias));
+expectType<SomeTypeAlias[]>(snakecaseKeys([objectWithTypeAlias]));
