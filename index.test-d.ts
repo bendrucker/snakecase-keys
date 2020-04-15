@@ -1,5 +1,5 @@
 import { expectType } from 'tsd';
-import camelcaseKeys = require('.');
+import snakecaseKeys = require('.');
 
 interface TestInterface {
   foo: boolean
@@ -7,19 +7,19 @@ interface TestInterface {
 
 const test: TestInterface = { foo: false }
 expectType<{ [key: string]: unknown }>(
-  camelcaseKeys(test)
+  snakecaseKeys(test)
 )
 
 expectType<Array<{ [key: string]: unknown }>>(
-  camelcaseKeys([{ 'foo-bar': true }]),
+  snakecaseKeys([{ 'foo-bar': true }]),
 );
 
-expectType<{ [key: string]: unknown }>(camelcaseKeys({ 'foo-bar': true }));
+expectType<{ [key: string]: unknown }>(snakecaseKeys({ 'foo-bar': true }));
 
 expectType<{ [key: string]: unknown }>(
-  camelcaseKeys({ 'foo-bar': true }, { deep: true }),
+  snakecaseKeys({ 'foo-bar': true }, { deep: true }),
 );
 
 expectType<{ [key: string]: unknown }>(
-  camelcaseKeys({ 'foo-bar': true }, { exclude: ['foo', /bar/] }),
+  snakecaseKeys({ 'foo-bar': true }, { exclude: ['foo', /bar/] }),
 );
