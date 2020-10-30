@@ -1,4 +1,4 @@
-# snakecase-keys [![Build Status](https://travis-ci.org/bendrucker/snakecase-keys.svg?branch=master)](https://travis-ci.org/bendrucker/snakecase-keys) [![Greenkeeper badge](https://badges.greenkeeper.io/bendrucker/snakecase-keys.svg)](https://greenkeeper.io/)
+# snakecase-keys [![tests](https://github.com/bendrucker/snakecase-keys/workflows/tests/badge.svg)](https://github.com/bendrucker/snakecase-keys/actions?query=workflow%3Atests)
 
 > Convert an object's keys to snake case
 
