@@ -21,16 +21,22 @@
     "object"
   ],
   "devDependencies": {
+<<<<<<< HEAD
     "standard": "^15.0.0",
     "tape": "^5.0.0",
     "tsd": "^0.12.1"
+=======
+    "standard": "^16.0.0",
+    "tape": "^5.0.1",
+    "tsd": "^0.13.1"
+>>>>>>> eb539f1 (update deps)
   },
   "files": [
     "index.js",
     "index.d.ts"
   ],
   "dependencies": {
-    "map-obj": "^4.0.0",
+    "map-obj": "^4.1.0",
     "to-snake-case": "^1.0.0"
   },
   "engines": {
