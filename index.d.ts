@@ -18,13 +18,13 @@ declare namespace snakecaseKeys {
 Convert object keys to snake using [`to-snake-case`](https://github.com/ianstormtaylor/to-snake-case).
 @param input - Object or array of objects to snake-case.
 */
-declare function snakecaseKeys<T extends ReadonlyArray<{ [key: string]: any }>>(
-  input: T,
+declare function snakecaseKeys<ReturnValue extends ReadonlyArray<{ [key: string]: any }>, Input extends ReadonlyArray<{ [key: string]: any }>>(
+  input: Input,
   options?: snakecaseKeys.Options,
-): T;
-declare function snakecaseKeys<T extends { [key: string]: any }>(
-  input: T,
+): ReturnValue;
+declare function snakecaseKeys<ReturnValue extends { [key: string]: any }, Input extends ReadonlyArray<{ [key: string]: any }>>(
+  input: Input,
   options?: snakecaseKeys.Options,
-): T;
+): ReturnValue;
 
 export = snakecaseKeys;
