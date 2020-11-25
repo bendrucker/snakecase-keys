@@ -22,7 +22,7 @@ declare function snakecaseKeys<ReturnValue extends ReadonlyArray<{ [key: string]
   input: Input,
   options?: snakecaseKeys.Options,
 ): ReturnValue;
-declare function snakecaseKeys<ReturnValue extends { [key: string]: any }, Input extends ReadonlyArray<{ [key: string]: any }>>(
+declare function snakecaseKeys<ReturnValue extends { [key: string]: any }, Input extends { [key: string]: any }>(
   input: Input,
   options?: snakecaseKeys.Options,
 ): ReturnValue;
