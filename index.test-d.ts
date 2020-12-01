@@ -1,48 +1,45 @@
-import {expectType} from 'tsd';
-import snakecaseKeys = require('.');
+import { expectError, expectType } from "tsd";
+import snakecaseKeys = require(".");
 
-const fooBarObject = {'fooBar': true};
+// Without generic parameter
+const fooBarObject = { fooBar: true };
 const camelFooBarObject = snakecaseKeys(fooBarObject);
-expectType<typeof fooBarObject>(camelFooBarObject);
+expectType<{ [key: string]: any }>(camelFooBarObject);
 
-const fooBarArray = [{'fooBar': true}];
+const fooBarArray = [{ fooBar: true }];
 const camelFooBarArray = snakecaseKeys(fooBarArray);
-expectType<typeof fooBarArray>(camelFooBarArray);
+expectType<Array<{ [key: string]: any }>>(camelFooBarArray);
 
-expectType<Array<{[key in 'fooBar']: true}>>(snakecaseKeys([{'fooBar': true}]));
+expectType<string[]>(snakecaseKeys(["name 1", "name 2"]));
 
-expectType<string[]>(snakecaseKeys(['name 1', 'name 2']));
-
-expectType<string[]>(snakecaseKeys(['name 1', 'name 2'], {deep: true}));
-
-expectType<{[key in 'fooBar']: true}>(snakecaseKeys({'fooBar': true}));
-
-expectType<{[key in 'fooBar']: true}>(
-	snakecaseKeys({'fooBar': true}, {deep: true}),
-);
-
-expectType<{[key in 'fooBar']: true}>(
-	snakecaseKeys({'fooBar': true}, {exclude: ['foo', /bar/]}),
-);
-
-interface SomeObject {
-	someProperty: string;
+// Using generic parameters
+interface ISnakecase {
+  foo_bar: boolean;
+}
+interface ICamelcase {
+  fooBar: boolean;
 }
 
-const someObj: SomeObject = {
-	someProperty: 'this should work'
+type Snakecase = {
+  foo_bar: boolean;
+};
+type Camelcase = {
+  fooBar: boolean;
 };
 
-expectType<SomeObject>(snakecaseKeys(someObj));
-expectType<SomeObject[]>(snakecaseKeys([someObj]));
+expectType<ISnakecase>(
+  snakecaseKeys<ISnakecase>({ fooBar: true })
+);
+expectType<ISnakecase[]>(
+  snakecaseKeys<ISnakecase[]>([{ fooBar: true }])
+);
+expectError<ICamelcase>(
+  snakecaseKeys<ISnakecase>({ fooBar: true })
+);
 
-type SomeTypeAlias = {
-	someProperty: string;
-}
-
-const objectWithTypeAlias = {
-	someProperty: 'this should also work'
-};
-
-expectType<SomeTypeAlias>(snakecaseKeys(objectWithTypeAlias));
-expectType<SomeTypeAlias[]>(snakecaseKeys([objectWithTypeAlias]));
+expectType<Snakecase>(
+  snakecaseKeys<Snakecase, Camelcase>({ fooBar: true })
+);
+expectError<Snakecase>(
+  snakecaseKeys<Snakecase, Snakecase>({ fooBar: true })
+);
