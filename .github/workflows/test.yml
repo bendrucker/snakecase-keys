@@ -17,5 +17,4 @@ jobs:
         - "12"
         - "14"
 name: tests
-"on":
-- push
+on: [push, pull_request]
