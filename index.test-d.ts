@@ -1,5 +1,5 @@
 import { expectError, expectType } from "tsd";
-import snakecaseKeys = require(".");
+import snakecaseKeys from ".";
 
 // Without generic parameter
 const fooBarObject = { fooBar: true };

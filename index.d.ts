@@ -28,4 +28,4 @@ declare function snakecaseKeys<
   Input extends { [key: string]: any } = { [key: string]: any }
 >(input: Input, options?: snakecaseKeys.Options): ReturnValue;
 
-export = snakecaseKeys;
+export default snakecaseKeys;
