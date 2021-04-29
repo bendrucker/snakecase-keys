@@ -1,7 +1,7 @@
 'use strict'
 
 const map = require('map-obj')
-const snakeCase = require('to-snake-case')
+const { snakeCase } = require('snake-case')
 
 module.exports = function (obj, options) {
   options = Object.assign({ deep: true, exclude: [] }, options)

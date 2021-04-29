@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "map-obj": "^4.1.0",
-    "to-snake-case": "^1.0.0"
+    "snake-case": "^3.0.4"
   },
   "engines": {
     "node": ">=12"
