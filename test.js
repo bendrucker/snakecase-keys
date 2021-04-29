@@ -8,6 +8,11 @@ test(function (t) {
   t.end()
 })
 
+test('repeated capital letters', function (t) {
+  t.deepEqual(Snake({ fooID: 1 }), { foo_id: 1 })
+  t.end()
+})
+
 test('shallow conversion with {deep: false}', function (t) {
   t.deepEqual(
     Snake({ fooBar: { barBaz: 'qux' } }, { deep: false }),
