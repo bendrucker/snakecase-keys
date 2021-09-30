@@ -1,3 +1,63 @@
+import { SnakeCase } from "type-fest";
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+type EmptyTuple = [];
+
+/**
+Return a default type if input type is nil.
+@template T - Input type.
+@template U - Default type.
+*/
+type WithDefault<T, U extends T> = T extends undefined | void | null ? U : T;
+
+/**
+Check if an element is included in a tuple.
+TODO: Remove this once https://github.com/sindresorhus/type-fest/pull/217 is merged.
+*/
+type IsInclude<List extends readonly unknown[], Target> = List extends undefined
+  ? false
+  : List extends Readonly<EmptyTuple>
+  ? false
+  : List extends readonly [infer First, ...infer Rest]
+  ? First extends Target
+    ? true
+    : IsInclude<Rest, Target>
+  : boolean;
+
+/**
+Append a segment to dot-notation path.
+*/
+type AppendPath<S extends string, Last extends string> = S extends ""
+  ? Last
+  : `${S}.${Last}`;
+
+/**
+Convert keys of an object to camelcase strings.
+*/
+type SnakeCaseKeys<
+  T extends Record<string, any> | readonly any[],
+  Deep extends boolean,
+  Exclude extends readonly unknown[],
+  Path extends string = ""
+> = T extends readonly any[]
+  ? // Handle arrays or tuples.
+    {
+      [P in keyof T]: SnakeCaseKeys<T[P], Deep, Exclude>;
+    }
+  : T extends Record<string, any>
+  ? // Handle objects.
+    {
+      [P in keyof T & string as [IsInclude<Exclude, P>] extends [true]
+        ? P
+        : SnakeCase<P>]: [Deep] extends [true]
+        ? T[P] extends Record<string, any>
+          ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P>>
+          : T[P]
+        : T[P];
+    }
+  : // Return anything else as-is.
+    T;
+
 declare namespace snakecaseKeys {
   interface Options {
     /**
@@ -19,13 +79,15 @@ Convert object keys to snake using [`to-snake-case`](https://github.com/ianstorm
 @param input - Object or array of objects to snake-case.
 */
 declare function snakecaseKeys<
-  ReturnValue extends Array<{ [key: string]: any }>,
-  Input extends Array<{ [key: string]: any }> = Array<{ [key: string]: any }>
->(input: Input, options?: snakecaseKeys.Options): ReturnValue;
-
-declare function snakecaseKeys<
-  ReturnValue extends { [key: string]: any },
-  Input extends { [key: string]: any } = { [key: string]: any }
->(input: Input, options?: snakecaseKeys.Options): ReturnValue;
+  T extends Record<string, any> | readonly any[],
+  Options extends snakecaseKeys.Options
+>(
+  input: T,
+  options?: Options
+): SnakeCaseKeys<
+  T,
+  WithDefault<Options["deep"], true>,
+  WithDefault<Options["exclude"], EmptyTuple>
+>;
 
 export default snakecaseKeys;
