@@ -1,4 +1,4 @@
-import { SnakeCase } from "type-fest";
+import { Includes, SnakeCase } from "type-fest";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type EmptyTuple = [];
@@ -9,20 +9,6 @@ Return a default type if input type is nil.
 @template U - Default type.
 */
 type WithDefault<T, U extends T> = T extends undefined | void | null ? U : T;
-
-/**
-Check if an element is included in a tuple.
-TODO: Remove this once https://github.com/sindresorhus/type-fest/pull/217 is merged.
-*/
-type IsInclude<List extends readonly unknown[], Target> = List extends undefined
-  ? false
-  : List extends Readonly<EmptyTuple>
-  ? false
-  : List extends readonly [infer First, ...infer Rest]
-  ? First extends Target
-    ? true
-    : IsInclude<Rest, Target>
-  : boolean;
 
 /**
 Append a segment to dot-notation path.
@@ -47,7 +33,7 @@ type SnakeCaseKeys<
   : T extends Record<string, any>
   ? // Handle objects.
     {
-      [P in keyof T & string as [IsInclude<Exclude, P>] extends [true]
+      [P in keyof T & string as [Includes<Exclude, P>] extends [true]
         ? P
         : SnakeCase<P>]: [Deep] extends [true]
         ? T[P] extends Record<string, any>
