@@ -15,14 +15,14 @@ Check if an element is included in a tuple.
 @template List - List of values.
 @template Target - Target to search.
 */
-type IsInclude<List extends readonly unknown[], Target> = List extends undefined
+type Includes<List extends readonly unknown[], Target> = List extends undefined
   ? false
   : List extends Readonly<EmptyTuple>
   ? false
   : List extends readonly [infer First, ...infer Rest]
   ? First extends Target
     ? true
-    : IsInclude<Rest, Target>
+    : Includes<Rest, Target>
   : boolean;
 
 /**
@@ -54,7 +54,7 @@ type SnakeCaseKeys<
   : T extends Record<string, any>
   ? // Handle objects.
     {
-      [P in keyof T & string as [IsInclude<Exclude, P>] extends [true]
+      [P in keyof T & string as [Includes<Exclude, P>] extends [true]
         ? P
         : SnakeCase<P>]: [Deep] extends [true]
         ? T[P] extends Record<string, any>
