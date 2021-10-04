@@ -12,13 +12,19 @@ type WithDefault<T, U extends T> = T extends undefined | void | null ? U : T;
 
 /**
 Append a segment to dot-notation path.
+@template S - Base path.
+@template Last - Additional path.
 */
 type AppendPath<S extends string, Last extends string> = S extends ""
   ? Last
   : `${S}.${Last}`;
 
 /**
-Convert keys of an object to camelcase strings.
+Convert keys of an object to snake-case strings.
+@template T - Input object or array.
+@template Deep - Deep conversion flag.
+@template Exclude - Excluded keys.
+@template Path - Path of keys.
 */
 type SnakeCaseKeys<
   T extends Record<string, any> | readonly any[],
@@ -63,6 +69,7 @@ declare namespace snakecaseKeys {
 /**
 Convert object keys to snake using [`to-snake-case`](https://github.com/ianstormtaylor/to-snake-case).
 @param input - Object or array of objects to snake-case.
+@param options - Options of conversion.
 */
 declare function snakecaseKeys<
   T extends Record<string, any> | readonly any[],
