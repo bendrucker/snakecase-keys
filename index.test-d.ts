@@ -1,45 +1,37 @@
-import { expectError, expectType } from "tsd";
+import { expectAssignable, expectType } from "tsd";
 import snakecaseKeys from ".";
 
-// Without generic parameter
-const fooBarObject = { fooBar: true };
-const camelFooBarObject = snakecaseKeys(fooBarObject);
-expectType<{ [key: string]: any }>(camelFooBarObject);
+// 1. Test object conversion
+expectType<{ foo_bar: boolean }>(snakecaseKeys({ fooBar: true }));
+expectAssignable<{ [key: string]: boolean }>(snakecaseKeys({ fooBar: true }));
 
-const fooBarArray = [{ fooBar: true }];
-const camelFooBarArray = snakecaseKeys(fooBarArray);
-expectType<Array<{ [key: string]: any }>>(camelFooBarArray);
-
+// 2. Test array conversion
+expectType<{ foo_bar: boolean }[]>(snakecaseKeys([{ fooBar: true }]));
+expectAssignable<Array<{ [key: string]: boolean }>>(
+  snakecaseKeys([{ fooBar: true }])
+);
 expectType<string[]>(snakecaseKeys(["name 1", "name 2"]));
 
-// Using generic parameters
-interface ISnakecase {
-  foo_bar: boolean;
-}
-interface ICamelcase {
-  fooBar: boolean;
-}
-
-type Snakecase = {
-  foo_bar: boolean;
-};
-type Camelcase = {
-  fooBar: boolean;
-};
-
-expectType<ISnakecase>(
-  snakecaseKeys<ISnakecase>({ fooBar: true })
+// 3. Test deep conversion
+expectType<{ foo_bar: { "foo-bar": { "foo bar": true } } }>(
+  snakecaseKeys(
+    { foo_bar: { "foo-bar": { "foo bar": true } } },
+    { deep: false }
+  )
 );
-expectType<ISnakecase[]>(
-  snakecaseKeys<ISnakecase[]>([{ fooBar: true }])
+expectType<{ foo_bar: { foo_bar: { foo_bar: boolean } } }>(
+  snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } } }, { deep: true })
 );
-expectError<ICamelcase>(
-  snakecaseKeys<ISnakecase>({ fooBar: true })
+expectType<{ foo_bar: { foo_bar: boolean } }[]>(
+  snakecaseKeys([{ "foo-bar": { foo_bar: true } }], { deep: true })
 );
 
-expectType<Snakecase>(
-  snakecaseKeys<Snakecase, Camelcase>({ fooBar: true })
-);
-expectError<Snakecase>(
-  snakecaseKeys<Snakecase, Snakecase>({ fooBar: true })
+// 4. Test exclusive conversion
+expectType<{ foo_bar: boolean; barBaz: true }>(
+  snakecaseKeys(
+    { fooBar: true, barBaz: true },
+    {
+      exclude: ["foo", "barBaz", /^baz/] as const,
+    }
+  )
 );
