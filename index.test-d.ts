@@ -5,6 +5,8 @@ import snakecaseKeys from ".";
 expectType<{ foo_bar: boolean }>(snakecaseKeys({ fooBar: true }));
 expectAssignable<{ [key: string]: boolean }>(snakecaseKeys({ fooBar: true }));
 
+expectType<{ foo_bar: boolean }>(snakecaseKeys({ FooBar: true }));
+
 // Array
 expectType<{ foo_bar: boolean }[]>(snakecaseKeys([{ fooBar: true }]));
 expectAssignable<Array<{ [key: string]: boolean }>>(
