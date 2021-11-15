@@ -30,7 +30,7 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "map-obj": "^4.1.0",
+    "map-obj": "^5.0.0",
     "snake-case": "^3.0.4",
     "type-fest": "^2.5.2"
   },
