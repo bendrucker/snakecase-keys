@@ -1,4 +1,5 @@
 import { SnakeCase } from "type-fest";
+import { Options as SnakeCaseOptions } from "snake-case"
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type EmptyTuple = [];
@@ -78,6 +79,12 @@ declare namespace snakecaseKeys {
 		@default []
 		*/
     readonly exclude?: ReadonlyArray<string | RegExp>;
+    
+    /**
+    Options object that gets passed to snake-case parsing function.
+    @default {}
+    */
+    readonly parsingOptions?: SnakeCaseOptions;
   }
 }
 

@@ -46,3 +46,12 @@ test('exclude', function (t) {
   )
   t.end()
 })
+
+test('parsing options', function (t) {
+  const camelCaseRegex = /([a-z])([A-Z])/g
+  t.deepEqual(
+    Snake({ 'fooBar.baz': 'qux', 'bar.bazQux': 'foo' }, { parsingOptions: { stripRegexp: camelCaseRegex } }),
+    { 'foo_bar.baz': 'qux', 'bar.baz_qux': 'foo' }
+  )
+  t.end()
+})
