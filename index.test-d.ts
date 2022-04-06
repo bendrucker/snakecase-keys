@@ -1,4 +1,5 @@
 import { expectAssignable, expectType } from "tsd";
+import type { SnakeCaseKeys } from ".";
 import snakecaseKeys from ".";
 
 // Object
@@ -36,4 +37,48 @@ expectType<{ foo_bar: boolean; barBaz: true }>(
       exclude: ["foo", "barBaz", /^baz/] as const,
     }
   )
+);
+
+// Verify exported type `SnakeCaseKeys`
+// Object
+const objectInput = { fooBar: true };
+expectType<SnakeCaseKeys<typeof objectInput, true, []>>(
+  snakecaseKeys(objectInput)
+);
+expectAssignable<SnakeCaseKeys<{ [key: string]: boolean }, true, []>>(
+  snakecaseKeys(objectInput)
+);
+
+// Array
+const arrayInput = [{ fooBar: true }];
+expectType<SnakeCaseKeys<typeof arrayInput, true, []>>(
+  snakecaseKeys([{ fooBar: true }])
+);
+expectAssignable<SnakeCaseKeys<typeof arrayInput, true, []>>(
+  snakecaseKeys(arrayInput)
+);
+expectType<SnakeCaseKeys<string[], true, []>>(
+  snakecaseKeys(["name 1", "name 2"])
+);
+
+// Deep
+const deepInput = { foo_bar: { "foo-bar": { "foo bar": true } } };
+expectType<SnakeCaseKeys<typeof deepInput, false, []>>(
+  snakecaseKeys(deepInput, { deep: false })
+);
+expectType<SnakeCaseKeys<typeof deepInput, true, []>>(
+  snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } } }, { deep: true })
+);
+const deepArrayInput = [{ "foo-bar": { foo_bar: true } }];
+expectType<SnakeCaseKeys<typeof deepArrayInput, true, []>>(
+  snakecaseKeys([{ "foo-bar": { foo_bar: true } }], { deep: true })
+);
+
+// Exclude
+const excludeInput = { fooBar: true, barBaz: true };
+const exclude = ["foo", "barBaz", /^baz/] as const;
+expectType<SnakeCaseKeys<typeof excludeInput, true, typeof exclude>>(
+  snakecaseKeys(excludeInput, {
+    exclude: ["foo", "barBaz", /^baz/] as const,
+  })
 );

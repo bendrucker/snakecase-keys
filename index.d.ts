@@ -42,7 +42,7 @@ Convert keys of an object to snake-case strings.
 @template Exclude - Excluded keys.
 @template Path - Path of keys.
 */
-type SnakeCaseKeys<
+export type SnakeCaseKeys<
   T extends Record<string, any> | readonly any[],
   Deep extends boolean,
   Exclude extends readonly unknown[],
