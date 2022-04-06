@@ -46,7 +46,7 @@ expectType<SnakeCaseKeys<typeof objectInput, true, []>>(
   snakecaseKeys(objectInput)
 );
 expectAssignable<SnakeCaseKeys<{ [key: string]: boolean }, true, []>>(
-  snakecaseKeys({ fooBar: true })
+  snakecaseKeys(objectInput)
 );
 
 // Array
