@@ -42,35 +42,27 @@ expectType<{ foo_bar: boolean; barBaz: true }>(
 // Verify exported type `SnakeCaseKeys`
 // Object
 const objectInput = { fooBar: true };
-expectType<SnakeCaseKeys<typeof objectInput, true, []>>(
-  snakecaseKeys(objectInput)
-);
-expectAssignable<SnakeCaseKeys<{ [key: string]: boolean }, true, []>>(
+expectType<SnakeCaseKeys<typeof objectInput>>(snakecaseKeys(objectInput));
+expectAssignable<SnakeCaseKeys<{ [key: string]: boolean }>>(
   snakecaseKeys(objectInput)
 );
 
 // Array
 const arrayInput = [{ fooBar: true }];
-expectType<SnakeCaseKeys<typeof arrayInput, true, []>>(
-  snakecaseKeys([{ fooBar: true }])
-);
-expectAssignable<SnakeCaseKeys<typeof arrayInput, true, []>>(
-  snakecaseKeys(arrayInput)
-);
-expectType<SnakeCaseKeys<string[], true, []>>(
-  snakecaseKeys(["name 1", "name 2"])
-);
+expectType<SnakeCaseKeys<typeof arrayInput>>(snakecaseKeys([{ fooBar: true }]));
+expectAssignable<SnakeCaseKeys<typeof arrayInput>>(snakecaseKeys(arrayInput));
+expectType<SnakeCaseKeys<string[]>>(snakecaseKeys(["name 1", "name 2"]));
 
 // Deep
 const deepInput = { foo_bar: { "foo-bar": { "foo bar": true } } };
 expectType<SnakeCaseKeys<typeof deepInput, false, []>>(
   snakecaseKeys(deepInput, { deep: false })
 );
-expectType<SnakeCaseKeys<typeof deepInput, true, []>>(
+expectType<SnakeCaseKeys<typeof deepInput>>(
   snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } } }, { deep: true })
 );
 const deepArrayInput = [{ "foo-bar": { foo_bar: true } }];
-expectType<SnakeCaseKeys<typeof deepArrayInput, true, []>>(
+expectType<SnakeCaseKeys<typeof deepArrayInput>>(
   snakecaseKeys([{ "foo-bar": { foo_bar: true } }], { deep: true })
 );
 

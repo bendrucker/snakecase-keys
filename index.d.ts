@@ -44,8 +44,8 @@ Convert keys of an object to snake-case strings.
 */
 export type SnakeCaseKeys<
   T extends Record<string, any> | readonly any[],
-  Deep extends boolean,
-  Exclude extends readonly unknown[],
+  Deep extends boolean = true,
+  Exclude extends readonly unknown[] = EmptyTuple,
   Path extends string = ""
 > = T extends readonly any[]
   ? // Handle arrays or tuples.
