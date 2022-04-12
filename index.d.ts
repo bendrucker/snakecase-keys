@@ -1,5 +1,5 @@
 import { SnakeCase } from "type-fest";
-import { Options as SnakeCaseOptions } from "snake-case"
+import { Options as SnakeCaseOptions } from "snake-case";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type EmptyTuple = [];
@@ -55,11 +55,11 @@ export type SnakeCaseKeys<
   : T extends Record<string, any>
   ? // Handle objects.
     {
-      [P in keyof T & string as [Includes<Exclude, P>] extends [true]
+      [P in keyof T as [Includes<Exclude, P>] extends [true]
         ? P
         : SnakeCase<P>]: [Deep] extends [true]
         ? T[P] extends Record<string, any>
-          ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P>>
+          ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
           : T[P]
         : T[P];
     }
