@@ -1,4 +1,4 @@
-import { expectAssignable, expectType } from "tsd";
+import { expectAssignable, expectType, expectNotType } from "tsd";
 import type { SnakeCaseKeys } from ".";
 import snakecaseKeys from ".";
 
@@ -71,6 +71,130 @@ const excludeInput = { fooBar: true, barBaz: true };
 const exclude = ["foo", "barBaz", /^baz/] as const;
 expectType<SnakeCaseKeys<typeof excludeInput, true, typeof exclude>>(
   snakecaseKeys(excludeInput, {
-    exclude: ["foo", "barBaz", /^baz/] as const,
+    exclude,
+  })
+);
+
+// Verify exported type `SnakeCaseKeys`
+// Mapping types and retaining properties of keys
+// https://github.com/microsoft/TypeScript/issues/13224
+
+type ObjectDataType = {
+  fooBar?: string;
+  barBaz?: string;
+  baz: string;
+};
+type InvalidConvertedObjectDataType = {
+  foo_bar: string;
+  bar_baz: string;
+  baz: string;
+};
+type ConvertedObjectDataType = {
+  foo_bar?: string;
+  bar_baz?: string;
+  baz: string;
+};
+
+const objectInputData: ObjectDataType = {
+  fooBar: "fooBar",
+  baz: "baz",
+};
+expectType<ConvertedObjectDataType>(snakecaseKeys(objectInputData));
+expectNotType<InvalidConvertedObjectDataType>(snakecaseKeys(objectInputData));
+
+// Array
+type ArrayDataType = ObjectDataType[];
+
+const arrayInputData: ArrayDataType = [
+  {
+    fooBar: "fooBar",
+    baz: "baz",
+  },
+];
+expectType<ConvertedObjectDataType[]>(snakecaseKeys(arrayInputData));
+<ConvertedObjectDataType[]>snakecaseKeys(arrayInputData);
+expectNotType<InvalidConvertedObjectDataType[]>(snakecaseKeys(arrayInputData));
+
+// Deep
+type DeepObjectType = {
+  fooBar?: string;
+  barBaz?: string;
+  baz: string;
+  firstLevel: {
+    fooBar?: string;
+    barBaz?: string;
+    secondLevel: {
+      fooBar: string;
+      barBaz?: string;
+    };
+  };
+};
+type InvalidConvertedDeepObjectDataType = {
+  foo_bar?: string;
+  bar_baz?: string;
+  baz: string;
+  first_level?: {
+    fooBar?: string;
+    barBaz?: string;
+    secondLevel?: {
+      fooBar: string;
+      barBaz?: string;
+    };
+  };
+};
+type ConvertedDeepObjectDataType = {
+  foo_bar?: string;
+  bar_baz?: string;
+  baz: string;
+  first_level: {
+    fooBar?: string;
+    barBaz?: string;
+    secondLevel: {
+      fooBar: string;
+      barBaz?: string;
+    };
+  };
+};
+const deepInputData: DeepObjectType = {
+  fooBar: "fooBar",
+  baz: "baz",
+  firstLevel: {
+    barBaz: "barBaz",
+    secondLevel: {
+      fooBar: "fooBar",
+    },
+  },
+};
+expectType<ConvertedDeepObjectDataType>(
+  snakecaseKeys(deepInputData, { deep: false })
+);
+expectNotType<InvalidConvertedDeepObjectDataType>(
+  snakecaseKeys(deepInputData, { deep: false })
+);
+
+// Exclude
+type InvalidConvertedExcludeObjectDataType = {
+  foo_bar?: string;
+  bar_baz?: string;
+  baz: string;
+};
+type ConvertedExcludeObjectDataType = {
+  foo_bar?: string;
+  barBaz?: string;
+  baz: string;
+};
+const excludeInputData: ObjectDataType = {
+  fooBar: "fooBar",
+  barBaz: "barBaz",
+  baz: "baz",
+};
+expectType<ConvertedExcludeObjectDataType>(
+  snakecaseKeys(excludeInputData, {
+    exclude,
+  })
+);
+expectNotType<InvalidConvertedExcludeObjectDataType>(
+  snakecaseKeys(excludeInputData, {
+    exclude,
   })
 );
