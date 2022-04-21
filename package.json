@@ -21,7 +21,7 @@
     "object"
   ],
   "devDependencies": {
-    "standard": "^16.0.0",
+    "standard": "^17.0.0",
     "tape": "^5.0.1",
     "tsd": "^0.20.0"
   },
