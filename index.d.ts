@@ -35,38 +35,38 @@ type AppendPath<S extends string, Last extends string> = S extends ""
   ? Last
   : `${S}.${Last}`;
 
-/**
-Convert keys of an object to snake-case strings.
-@template T - Input object or array.
-@template Deep - Deep conversion flag.
-@template Exclude - Excluded keys.
-@template Path - Path of keys.
-*/
-export type SnakeCaseKeys<
-  T extends Record<string, any> | readonly any[],
-  Deep extends boolean = true,
-  Exclude extends readonly unknown[] = EmptyTuple,
-  Path extends string = ""
-> = T extends readonly any[]
-  ? // Handle arrays or tuples.
-    {
-      [P in keyof T]: SnakeCaseKeys<T[P], Deep, Exclude>;
-    }
-  : T extends Record<string, any>
-  ? // Handle objects.
-    {
-      [P in keyof T as [Includes<Exclude, P>] extends [true]
-        ? P
-        : SnakeCase<P>]: [Deep] extends [true]
-        ? T[P] extends Record<string, any>
-          ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
-          : T[P]
-        : T[P];
-    }
-  : // Return anything else as-is.
-    T;
-
 declare namespace snakecaseKeys {
+  /**
+  Convert keys of an object to snake-case strings.
+  @template T - Input object or array.
+  @template Deep - Deep conversion flag.
+  @template Exclude - Excluded keys.
+  @template Path - Path of keys.
+  */
+  export type SnakeCaseKeys<
+    T extends Record<string, any> | readonly any[],
+    Deep extends boolean = true,
+    Exclude extends readonly unknown[] = EmptyTuple,
+    Path extends string = ""
+  > = T extends readonly any[]
+    ? // Handle arrays or tuples.
+      {
+        [P in keyof T]: SnakeCaseKeys<T[P], Deep, Exclude>;
+      }
+    : T extends Record<string, any>
+    ? // Handle objects.
+      {
+        [P in keyof T as [Includes<Exclude, P>] extends [true]
+          ? P
+          : SnakeCase<P>]: [Deep] extends [true]
+          ? T[P] extends Record<string, any>
+            ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
+            : T[P]
+          : T[P];
+      }
+    : // Return anything else as-is.
+      T;
+
   interface Options {
     /**
 		Recurse nested objects and objects in arrays.
@@ -99,7 +99,7 @@ declare function snakecaseKeys<
 >(
   input: T,
   options?: Options
-): SnakeCaseKeys<
+): snakecaseKeys.SnakeCaseKeys<
   T,
   WithDefault<Options["deep"], true>,
   WithDefault<Options["exclude"], EmptyTuple>
