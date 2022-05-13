@@ -105,4 +105,4 @@ declare function snakecaseKeys<
   WithDefault<Options["exclude"], EmptyTuple>
 >;
 
-export default snakecaseKeys;
+export = snakecaseKeys;
