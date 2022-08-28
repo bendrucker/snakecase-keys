@@ -128,6 +128,13 @@ type DeepObjectType = {
       barBaz?: string;
     };
   };
+  optionalFirstLevel?: {
+    fooBar?: string;
+    barBaz?: null;
+    optionalSecondLevel?: {
+      fooBar: number;
+    };
+  };
 };
 type InvalidConvertedDeepObjectDataType = {
   foo_bar?: string;
@@ -139,6 +146,13 @@ type InvalidConvertedDeepObjectDataType = {
     secondLevel?: {
       fooBar: string;
       barBaz?: string;
+    };
+  };
+  optional_first_level?: {
+    fooBar?: string;
+    barBaz?: null;
+    optionalSecondLevel?: {
+      fooBar: number;
     };
   };
 };
@@ -154,7 +168,35 @@ type ConvertedDeepObjectDataType = {
       barBaz?: string;
     };
   };
+  optional_first_level?: {
+    fooBar?: string;
+    barBaz?: null;
+    optionalSecondLevel?: {
+      fooBar: number;
+    };
+  };
 };
+type ConvertedDeepObjectDataTypeDeeply = {
+  foo_bar?: string;
+  bar_baz?: string;
+  baz: string;
+  first_level: {
+    foo_bar?: string;
+    bar_baz?: string;
+    second_level: {
+      foo_bar: string;
+      bar_baz?: string;
+    };
+  };
+  optional_first_level?: {
+    foo_bar?: string;
+    bar_baz?: null;
+    optional_second_level?: {
+      foo_bar: number;
+    };
+  };
+};
+
 const deepInputData: DeepObjectType = {
   fooBar: "fooBar",
   baz: "baz",
@@ -170,6 +212,10 @@ expectType<ConvertedDeepObjectDataType>(
 );
 expectNotType<InvalidConvertedDeepObjectDataType>(
   snakecaseKeys(deepInputData, { deep: false })
+);
+
+expectType<ConvertedDeepObjectDataTypeDeeply>(
+  snakecaseKeys(deepInputData, { deep: true })
 );
 
 // Exclude

@@ -59,7 +59,7 @@ declare namespace snakecaseKeys {
         [P in keyof T as [Includes<Exclude, P>] extends [true]
           ? P
           : SnakeCase<P>]: [Deep] extends [true]
-          ? T[P] extends Record<string, any>
+          ? T[P] extends Record<string, any> | undefined
             ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
             : T[P]
           : T[P];
@@ -79,7 +79,7 @@ declare namespace snakecaseKeys {
 		@default []
 		*/
     readonly exclude?: ReadonlyArray<string | RegExp>;
-    
+
     /**
     Options object that gets passed to snake-case parsing function.
     @default {}
