@@ -51,7 +51,9 @@ declare namespace snakecaseKeys {
   > = T extends readonly any[]
     ? // Handle arrays or tuples.
       {
-        [P in keyof T]: SnakeCaseKeys<T[P], Deep, Exclude>;
+        [P in keyof T]: T[P] extends Record<string, any> | readonly any[]
+        ? SnakeCaseKeys<T[P], Deep, Exclude>
+        : T[P];
       }
     : T extends Record<string, any>
     ? // Handle objects.
