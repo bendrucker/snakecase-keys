@@ -55,19 +55,21 @@ declare namespace snakecaseKeys {
         ? SnakeCaseKeys<T[P], Deep, Exclude>
         : T[P];
       }
-    : T extends Record<string, any>
-    ? // Handle objects.
-      {
-        [P in keyof T as [Includes<Exclude, P>] extends [true]
-          ? P
-          : SnakeCase<P>]: [Deep] extends [true]
-          ? T[P] extends Record<string, any> | undefined
-            ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
-            : T[P]
-          : T[P];
-      }
-    : // Return anything else as-is.
-      T;
+    : T extends Record<string, Date | Error | RegExp>
+      ? T // Date, Error, and RegExp objects are not converted.
+      : T extends Record<string, any>
+      ? // Handle objects.
+        {
+          [P in keyof T as [Includes<Exclude, P>] extends [true]
+            ? P
+            : SnakeCase<P>]: [Deep] extends [true]
+            ? T[P] extends Record<string, any> | undefined
+              ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
+              : T[P]
+            : T[P];
+        }
+      : // Return anything else as-is.
+        T;
 
   interface Options {
     /**

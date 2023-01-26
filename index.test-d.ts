@@ -28,6 +28,15 @@ expectType<{ foo_bar: { foo_bar: { foo_bar: boolean } } }>(
 expectType<{ foo_bar: { foo_bar: boolean } }[]>(
   snakecaseKeys([{ "foo-bar": { foo_bar: true } }], { deep: true })
 );
+expectType<{ date: Date }[]>(
+  snakecaseKeys([{ date: new Date() }], { deep: true })
+);
+expectType<{ regexp: RegExp }[]>(
+  snakecaseKeys([{ regexp: /example/ }], { deep: true })
+);
+expectType<{ error: Error }[]>(
+  snakecaseKeys([{ error: new Error() }], { deep: true })
+);
 
 // Exclude
 expectType<{ foo_bar: boolean; barBaz: true }>(
