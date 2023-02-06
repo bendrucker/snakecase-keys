@@ -32,7 +32,7 @@
   "dependencies": {
     "map-obj": "^4.1.0",
     "snake-case": "^3.0.4",
-    "type-fest": "^2.5.2"
+    "type-fest": "^3.5.5"
   },
   "engines": {
     "node": ">=12"
