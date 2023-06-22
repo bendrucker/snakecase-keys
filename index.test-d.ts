@@ -38,6 +38,17 @@ expectType<{ error: Error }[]>(
   snakecaseKeys([{ error: new Error() }], { deep: true })
 );
 
+// Deep with defalt(no deep option)
+expectType<{ foo_bar: { foo_bar: { foo_bar: boolean } } }>(
+  snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } } })
+);
+expectType<{ foo_bar: { foo_bar: boolean } }[]>(
+  snakecaseKeys([{ "foo-bar": { foo_bar: true } }])
+);
+expectType<{ date: Date }[]>(
+  snakecaseKeys([{ date: new Date() }])
+);
+
 // Exclude
 expectType<{ foo_bar: boolean; barBaz: true }>(
   snakecaseKeys(
@@ -73,6 +84,14 @@ expectType<SnakeCaseKeys<typeof deepInput>>(
 const deepArrayInput = [{ "foo-bar": { foo_bar: true } }];
 expectType<SnakeCaseKeys<typeof deepArrayInput>>(
   snakecaseKeys([{ "foo-bar": { foo_bar: true } }], { deep: true })
+);
+
+// Deep with defalt(no deep option)
+expectType<SnakeCaseKeys<typeof deepInput>>(
+  snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } } })
+);
+expectType<SnakeCaseKeys<typeof deepArrayInput>>(
+  snakecaseKeys([{ "foo-bar": { foo_bar: true } }])
 );
 
 // Exclude
@@ -225,6 +244,11 @@ expectNotType<InvalidConvertedDeepObjectDataType>(
 
 expectType<ConvertedDeepObjectDataTypeDeeply>(
   snakecaseKeys(deepInputData, { deep: true })
+);
+
+// Deep with defalt(no deep option)
+expectType<ConvertedDeepObjectDataTypeDeeply>(
+  snakecaseKeys(deepInputData)
 );
 
 // Exclude
