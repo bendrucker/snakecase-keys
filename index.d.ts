@@ -105,7 +105,7 @@ declare function snakecaseKeys<
   options?: Options
 ): snakecaseKeys.SnakeCaseKeys<
   T,
-  WithDefault<Options["deep"], true>,
+  Options["deep"] extends boolean ? Options["deep"] : true,
   WithDefault<Options["exclude"], EmptyTuple>
 >;
 
