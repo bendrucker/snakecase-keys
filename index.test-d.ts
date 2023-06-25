@@ -1,4 +1,4 @@
-import { expectAssignable, expectType, expectNotType, expectError } from "tsd";
+import { expectAssignable, expectType, expectNotType } from "tsd";
 import type { SnakeCaseKeys } from ".";
 import snakecaseKeys from ".";
 
