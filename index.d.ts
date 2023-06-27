@@ -1,4 +1,4 @@
-import { SnakeCase, JsonPrimitive } from "type-fest";
+import { SnakeCase } from "type-fest";
 import { Options as SnakeCaseOptions } from "snake-case";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
