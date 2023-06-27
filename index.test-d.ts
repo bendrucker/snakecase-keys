@@ -36,16 +36,6 @@ expectAssignable<{ [key: string]: boolean }>(snakecaseKeys({ fooBar: true }));
 
 expectType<{ foo_bar: boolean }>(snakecaseKeys({ FooBar: true }));
 
-// Object value allow any type
-expectType<{ string_value: string; }>(snakecaseKeys({ stringValue: "stringValue" }));
-expectType<{ number_value: number; }>(snakecaseKeys({ numberValue: 123 }));
-expectType<{ boolean_value: boolean; }>(snakecaseKeys({ booleanValue: true }));
-expectType<{ null_value: null }>(snakecaseKeys({ nullValue: null }));
-expectType<{ undefined_value: undefined }>(snakecaseKeys({ undefinedValue: undefined }));
-expectType<{ object_value: Point }>(snakecaseKeys({ objectValue: point }));
-expectType<{ json_object_value: { foo_bar: Point; }; }>(snakecaseKeys({ jsonObjectValue: { fooBar: point } }));
-expectType<{ json_array_value: { json_object_value: { foo_bar: Point; }; }[]; }>(snakecaseKeys({ jsonArrayValue: [{ jsonObjectValue: { fooBar: point } }] }));
-
 // Array
 expectType<{ foo_bar: boolean }[]>(snakecaseKeys([{ fooBar: true }]));
 expectAssignable<Array<{ [key: string]: boolean }>>(
@@ -84,6 +74,9 @@ expectType<{ person_object: Person }[]>(
 expectType<{ date: Date, person_object: Person }[]>(
   snakecaseKeys([{ date: new Date(), personObject: person }], { deep: true })
 );
+expectType<{ foo_bar: { foo_baz: { foo_bar: Point; }[]; }[]; }>(
+  snakecaseKeys({ fooBar: [{ fooBaz: [{ fooBar: point }] }] }, { deep: true })
+);
 
 // Deep with defalt(no deep option)
 expectType<{ foo_bar: { foo_bar: { foo_bar: boolean } } }>(
@@ -94,6 +87,9 @@ expectType<{ foo_bar: { foo_bar: boolean } }[]>(
 );
 expectType<{ date: Date }[]>(
   snakecaseKeys([{ date: new Date() }])
+);
+expectType<{ foo_bar: { foo_baz: { foo_bar: Point; }[]; }[]; }>(
+  snakecaseKeys({ fooBar: [{ fooBaz: [{ fooBar: point }] }] })
 );
 
 // Exclude

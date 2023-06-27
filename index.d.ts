@@ -3,11 +3,7 @@ import { Options as SnakeCaseOptions } from "snake-case";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type EmptyTuple = [];
-
-type JsonObject = { [Key in string]: JsonValue };
-type JsonObjectOptional = JsonObject | undefined;
-type JsonValue = JsonPrimitive | object | JsonObject | JsonArray | undefined;
-type JsonArray = JsonValue[] | readonly JsonValue[];
+type ObjectOptional = Record<string, unknown> | undefined;
 
 /**
 Return a default type if input type is nil.
@@ -49,24 +45,24 @@ declare namespace snakecaseKeys {
   @template Path - Path of keys.
   */
   export type SnakeCaseKeys<
-    T extends JsonObjectOptional | readonly any[],
+    T extends ObjectOptional | readonly any[],
     Deep extends boolean = true,
     Exclude extends readonly unknown[] = EmptyTuple,
     Path extends string = ""
   > = T extends readonly any[]
     ? // Handle arrays or tuples.
       {
-        [P in keyof T]: T[P] extends JsonObjectOptional | readonly any[]
+        [P in keyof T]: T[P] extends Record<string, unknown> | readonly any[]
         ? SnakeCaseKeys<T[P], Deep, Exclude>
         : T[P];
       }
-    : T extends JsonObject
+    : T extends Record<string, unknown>
       ? // Handle objects.
         {
           [P in keyof T as [Includes<Exclude, P>] extends [true]
             ? P
             : SnakeCase<P>]: [Deep] extends [true]
-            ? T[P] extends JsonObjectOptional | readonly any[]
+            ? T[P] extends ObjectOptional | readonly any[]
               ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
               : T[P]
             : T[P];
@@ -101,7 +97,7 @@ Convert object keys to snake using [`to-snake-case`](https://github.com/ianstorm
 @param options - Options of conversion.
 */
 declare function snakecaseKeys<
-  T extends JsonObject | readonly any[],
+  T extends Record<string, unknown> | readonly any[],
   Options extends snakecaseKeys.Options
 >(
   input: T,
