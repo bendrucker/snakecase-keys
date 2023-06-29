@@ -2,7 +2,35 @@ import { expectAssignable, expectType, expectNotType } from "tsd";
 import type { SnakeCaseKeys } from ".";
 import snakecaseKeys from ".";
 
+class Point {
+	x: number;
+	y: number;
+
+	addPoint(point: Point): Point {
+		return new Point(this.x + point.x, this.y + point.y);
+	}
+
+	constructor(x: number, y: number) {
+		this.x = x;
+		this.y = y;
+	}
+}
+const point = new Point(0, 10);
+
+interface Person {
+	firstName: string;
+	lastName: string;
+	age: number;
+}
+
+const person: Person = {
+	firstName: 'firstName',
+	lastName: 'lastName',
+	age: 30
+};
+
 // Object
+expectType<{}>(snakecaseKeys({}));
 expectType<{ foo_bar: boolean }>(snakecaseKeys({ fooBar: true }));
 expectAssignable<{ [key: string]: boolean }>(snakecaseKeys({ fooBar: true }));
 
@@ -16,14 +44,14 @@ expectAssignable<Array<{ [key: string]: boolean }>>(
 expectType<string[]>(snakecaseKeys(["name 1", "name 2"]));
 
 // Deep
-expectType<{ foo_bar: { "foo-bar": { "foo bar": true } } }>(
+expectType< { foo_bar: { "foo-bar": { "foo bar": true; }; }; nested: { pointObject: Point; }; }>(
   snakecaseKeys(
-    { foo_bar: { "foo-bar": { "foo bar": true } } },
+    { foo_bar: { "foo-bar": { "foo bar": true } }, nested: { pointObject: point } },
     { deep: false }
   )
 );
-expectType<{ foo_bar: { foo_bar: { foo_bar: boolean } } }>(
-  snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } } }, { deep: true })
+expectType<{ foo_bar: { foo_bar: { foo_bar: boolean; }; }; nested: { point_object: Point; }; }>(
+  snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } }, nested: { pointObject: point }  }, { deep: true })
 );
 expectType<{ foo_bar: { foo_bar: boolean } }[]>(
   snakecaseKeys([{ "foo-bar": { foo_bar: true } }], { deep: true })
@@ -37,6 +65,18 @@ expectType<{ regexp: RegExp }[]>(
 expectType<{ error: Error }[]>(
   snakecaseKeys([{ error: new Error() }], { deep: true })
 );
+expectType<{ point_object: Point }[]>(
+  snakecaseKeys([{ pointObject: point }], { deep: true })
+);
+expectType<{ person_object: Person }[]>(
+  snakecaseKeys([{ personObject: person }], { deep: true })
+);
+expectType<{ date: Date, person_object: Person }[]>(
+  snakecaseKeys([{ date: new Date(), personObject: person }], { deep: true })
+);
+expectType<{ foo_bar: { foo_baz: { foo_bar: Point; }[]; }[]; }>(
+  snakecaseKeys({ fooBar: [{ fooBaz: [{ fooBar: point }] }] }, { deep: true })
+);
 
 // Deep with defalt(no deep option)
 expectType<{ foo_bar: { foo_bar: { foo_bar: boolean } } }>(
@@ -47,6 +87,9 @@ expectType<{ foo_bar: { foo_bar: boolean } }[]>(
 );
 expectType<{ date: Date }[]>(
   snakecaseKeys([{ date: new Date() }])
+);
+expectType<{ foo_bar: { foo_baz: { foo_bar: Point; }[]; }[]; }>(
+  snakecaseKeys({ fooBar: [{ fooBaz: [{ fooBar: point }] }] })
 );
 
 // Exclude
