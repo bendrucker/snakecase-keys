@@ -3,7 +3,9 @@ import { Options as SnakeCaseOptions } from "snake-case";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type EmptyTuple = [];
-type ObjectOptional = Record<string, unknown> | undefined;
+
+// Allow union with, for example, `undefined` and `null`.
+type ObjectUnion = Record<string, unknown> | unknown;
 
 /**
 Return a default type if input type is nil.
@@ -45,7 +47,7 @@ declare namespace snakecaseKeys {
   @template Path - Path of keys.
   */
   export type SnakeCaseKeys<
-    T extends ObjectOptional | readonly any[],
+    T extends ObjectUnion | readonly any[],
     Deep extends boolean = true,
     Exclude extends readonly unknown[] = EmptyTuple,
     Path extends string = ""
@@ -62,7 +64,7 @@ declare namespace snakecaseKeys {
           [P in keyof T as [Includes<Exclude, P>] extends [true]
             ? P
             : SnakeCase<P>]: [Deep] extends [true]
-            ? T[P] extends ObjectOptional | readonly any[]
+            ? T[P] extends ObjectUnion | readonly any[]
               ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
               : T[P]
             : T[P];
