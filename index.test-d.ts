@@ -320,3 +320,16 @@ expectNotType<InvalidConvertedExcludeObjectDataType>(
     exclude,
   })
 );
+
+// Test for union type
+// eslint-disable-next-line @typescript-eslint/ban-types
+const objectCamelcased: SnakeCaseKeys<{fooBar: {fooProp: string} | null}, true>
+	= snakecaseKeys({fooBar: {fooProp: 'foo_props'}}, {deep: true});
+// eslint-disable-next-line @typescript-eslint/ban-types
+const nullCamelcased: SnakeCaseKeys<{fooBar: {fooProp: string} | null}, true>
+	= snakecaseKeys({fooBar: null}, {deep: true});
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+expectType<{foo_bar: {foo_prop: string} | null}>(objectCamelcased);
+// eslint-disable-next-line @typescript-eslint/ban-types
+expectType<{foo_bar: {foo_prop: string} | null}>(nullCamelcased);
