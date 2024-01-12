@@ -47,14 +47,14 @@ declare namespace snakecaseKeys {
   @template Path - Path of keys.
   */
   export type SnakeCaseKeys<
-    T extends ObjectUnion | readonly any[],
+    T extends ObjectUnion | ReadonlyArray<Record<string, unknown>>,
     Deep extends boolean = true,
     Exclude extends readonly unknown[] = EmptyTuple,
     Path extends string = ""
-  > = T extends readonly any[]
+  > = T extends ReadonlyArray<Record<string, unknown>>
     ? // Handle arrays or tuples.
       {
-        [P in keyof T]: T[P] extends Record<string, unknown> | readonly any[]
+        [P in keyof T]: T[P] extends Record<string, unknown> | ReadonlyArray<Record<string, unknown>>
         ? SnakeCaseKeys<T[P], Deep, Exclude>
         : T[P];
       }
@@ -64,7 +64,7 @@ declare namespace snakecaseKeys {
           [P in keyof T as [Includes<Exclude, P>] extends [true]
             ? P
             : SnakeCase<P>]: [Deep] extends [true]
-            ? T[P] extends ObjectUnion | readonly any[]
+            ? T[P] extends ObjectUnion | ReadonlyArray<Record<string, unknown>>
               ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
               : T[P]
             : T[P];
@@ -99,7 +99,7 @@ Convert object keys to snake using [`to-snake-case`](https://github.com/ianstorm
 @param options - Options of conversion.
 */
 declare function snakecaseKeys<
-  T extends Record<string, unknown> | readonly any[],
+  T extends Record<string, unknown> | ReadonlyArray<Record<string, unknown>>,
   Options extends snakecaseKeys.Options
 >(
   input: T,
