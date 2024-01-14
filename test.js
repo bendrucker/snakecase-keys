@@ -67,12 +67,12 @@ test('shouldRecurse option', function (t) {
   const date = new Date()
   t.deepEqual(
     Snake(
-      { fooBar: { barBaz: 'qux' }, fooIcon: date },
+      { fooBar: { barBaz: 'qux' }, fooDate: date },
       { deep: true, shouldRecurse: (key, val) => !(val instanceof Date) }
     ),
     {
       foo_bar: { bar_baz: 'qux' },
-      foo_icon: date
+      foo_date: date
     }
   )
   t.end()
