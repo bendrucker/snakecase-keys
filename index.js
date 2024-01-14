@@ -9,7 +9,8 @@ module.exports = function (obj, options) {
   return map(obj, function (key, val) {
     return [
       matches(options.exclude, key) ? key : snakeCase(key, options.parsingOptions),
-      val
+      val,
+      mapperOptions(key, val, options)
     ]
   }, options)
 }
@@ -20,4 +21,10 @@ function matches (patterns, value) {
       ? pattern === value
       : pattern.test(value)
   })
+}
+
+function mapperOptions (key, val, options) {
+  return options.shouldRecurse
+    ? { shouldRecurse: options.shouldRecurse(key, val) }
+    : undefined
 }
