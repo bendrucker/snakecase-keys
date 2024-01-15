@@ -31,12 +31,12 @@ snakecaseKeys({'foo-bar': true, nested: {fooBaz: 'bar'}});
 *Required*  
 Type: `Record<string, unknown> | ReadonlyArray<Record<string, unknown>>`
 
-An `Record<string, unknown>` or `ReadonlyArray<Record<string, unknown>>` to transform into snake case (keys only).
+A plain object or array of plain objects to transform into snake case (keys only).
 
 ##### options
 
 *Optional*  
-Type: `Options`
+Type: `object`
 
 ###### deep
 
