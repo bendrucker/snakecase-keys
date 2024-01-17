@@ -55,3 +55,25 @@ test('parsing options', function (t) {
   )
   t.end()
 })
+
+test('shouldRecurse option', function (t) {
+  t.deepEqual(
+    Snake(
+      { fooBar: { barBaz: 'qux' }, nested: { barBaz: 'qux' } },
+      { deep: true, shouldRecurse: (key, val) => key !== 'nested' }
+    ),
+    { foo_bar: { bar_baz: 'qux' }, nested: { barBaz: 'qux' } }
+  )
+  const date = new Date()
+  t.deepEqual(
+    Snake(
+      { fooBar: { barBaz: 'qux' }, fooDate: date },
+      { deep: true, shouldRecurse: (key, val) => !(val instanceof Date) }
+    ),
+    {
+      foo_bar: { bar_baz: 'qux' },
+      foo_date: date
+    }
+  )
+  t.end()
+})
