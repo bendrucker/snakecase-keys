@@ -86,6 +86,13 @@ declare namespace snakecaseKeys {
     readonly exclude?: ReadonlyArray<string | RegExp>;
 
     /**
+    A function that determines whether to recurse for a specific key and value.
+    */
+   readonly shouldRecurse?: {
+    (key: any, value: any): boolean;
+   }
+
+    /**
     Options object that gets passed to snake-case parsing function.
     @default {}
     */

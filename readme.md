@@ -52,6 +52,15 @@ Default: `[]`
 
 An array of strings or regular expressions matching keys that will be excluded from snake-casing.
 
+###### `shouldRecurse(key, val)` -> `boolean`
+
+*Optional*  
+Type: `function`
+
+A function that determines if `val` should be recursed.
+
+Requires `deep: true`.
+
 ## Related
 
 * [camelcase-keys](https://github.com/sindresorhus/camelcase-keys)
