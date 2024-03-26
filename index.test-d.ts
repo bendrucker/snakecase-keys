@@ -41,7 +41,6 @@ expectType<{ foo_bar: boolean }[]>(snakecaseKeys([{ fooBar: true }]));
 expectAssignable<Array<{ [key: string]: boolean }>>(
   snakecaseKeys([{ fooBar: true }])
 );
-expectType<string[]>(snakecaseKeys(["name 1", "name 2"]));
 
 // Deep
 expectType< { foo_bar: { "foo-bar": { "foo bar": true; }; }; nested: { pointObject: Point; }; }>(
@@ -114,7 +113,6 @@ expectAssignable<SnakeCaseKeys<{ [key: string]: boolean }>>(
 const arrayInput = [{ fooBar: true }];
 expectType<SnakeCaseKeys<typeof arrayInput>>(snakecaseKeys([{ fooBar: true }]));
 expectAssignable<SnakeCaseKeys<typeof arrayInput>>(snakecaseKeys(arrayInput));
-expectType<SnakeCaseKeys<string[]>>(snakecaseKeys(["name 1", "name 2"]));
 
 // Deep
 const deepInput = { foo_bar: { "foo-bar": { "foo bar": true } } };

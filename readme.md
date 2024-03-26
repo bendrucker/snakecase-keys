@@ -29,9 +29,9 @@ snakecaseKeys({'foo-bar': true, nested: {fooBaz: 'bar'}});
 ##### obj
 
 *Required*  
-Type: `object`
+Type: object | array[object]`
 
-An object to transform into snake case (keys only).
+A plain object or array of plain objects to transform into snake case (keys only).
 
 ##### options
 
