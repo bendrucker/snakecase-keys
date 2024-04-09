@@ -4,8 +4,15 @@ const map = require('map-obj')
 const { snakeCase } = require('snake-case')
 
 module.exports = function (obj, options) {
-  if (Array.isArray(obj) && obj.some(item => item.constructor !== Object)) { throw new Error('obj must be array of plain objects') }
-  if (obj.constructor !== Object) throw new Error('obj must be an plain object')
+  if (Array.isArray(obj)) {
+    if (obj.some(item => item.constructor !== Object)) {
+      throw new Error('obj must be array of plain objects')
+    }
+  } else {
+    if (obj.constructor !== Object) {
+      throw new Error('obj must be an plain object')
+    }
+  }
 
   options = Object.assign({ deep: true, exclude: [], parsingOptions: {} }, options)
 

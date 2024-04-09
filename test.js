@@ -21,7 +21,14 @@ test('shallow conversion with {deep: false}', function (t) {
   t.end()
 })
 
-test('arrays', function (t) {
+test('array of objects', function (t) {
+  const result = Snake([{ fooBar: 'baz' }])
+  t.deepEqual(result, [{ foo_bar: 'baz' }])
+  t.ok(Array.isArray(result))
+  t.end()
+})
+
+test('nested arrays', function (t) {
   const result = Snake({ foo: [0, 1, 2] })
   t.deepEqual(result, { foo: [0, 1, 2] })
   t.ok(Array.isArray(result.foo))
