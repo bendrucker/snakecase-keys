@@ -1,6 +1,5 @@
 {
   "name": "snakecase-keys",
-  "main": "index.js",
   "version": "8.0.1",
   "description": "Convert an object's keys to snake case",
   "license": "MIT",
@@ -8,33 +7,56 @@
   "author": {
     "name": "Ben Drucker",
     "email": "bvdrucker@gmail.com",
-    "url": "bendrucker.me"
+    "url": "https://bendrucker.me"
+  },
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.16"
   },
   "scripts": {
-    "test": "standard && tape test.js && tsd"
+    "test": "prettier --check src/ && npm run build && vitest run",
+    "format": "prettier --write src/",
+    "build": "rm -rf dist && tsc && tsc -p tsconfig.cjs.json",
+    "prepare": "npm run build"
   },
+  "files": [
+    "index.d.ts",
+    "dist"
+  ],
   "keywords": [
     "snake",
     "case",
-    "camel",
+    "snakecase",
+    "key",
     "keys",
-    "object"
-  ],
-  "devDependencies": {
-    "standard": "^17.0.0",
-    "tape": "^5.0.1",
-    "tsd": "^0.31.0"
-  },
-  "files": [
-    "index.js",
-    "index.d.ts"
+    "object",
+    "map"
   ],
   "dependencies": {
-    "map-obj": "^4.2.0",
-    "snake-case": "^3.0.4",
-    "type-fest": "^4.15.0"
+    "change-case": "^5.3.0"
   },
-  "engines": {
-    "node": ">=18"
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "prettier": "^3.1.1",
+    "tsd": "^0.30.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.1"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 120,
+    "trailingComma": "es5"
   }
 }

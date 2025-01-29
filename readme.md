@@ -1,65 +1,93 @@
-# snakecase-keys [![tests](https://github.com/bendrucker/snakecase-keys/workflows/tests/badge.svg)](https://github.com/bendrucker/snakecase-keys/actions?query=workflow%3Atests)
+# snakecase-keys
 
-> Convert an object's keys to snake case
-
+> Convert object keys to snake case
 
 ## Install
 
+```sh
+npm install snakecase-keys
 ```
-$ npm install --save snakecase-keys
-```
-
 
 ## Usage
 
+### ESM (recommended)
 ```js
-var snakecaseKeys = require('snakecase-keys')
+import snakecaseKeys from 'snakecase-keys'
 
-snakecaseKeys({fooBar: 'baz'})
-//=> {foo_bar: 'baz'}
+snakecaseKeys({ fooBar: true })
+//=> { foo_bar: true }
 
-snakecaseKeys({'foo-bar': true, nested: {fooBaz: 'bar'}});
-//=> {foo_bar: true, nested: {foo_baz: 'bar'}}
+snakecaseKeys({ fooBar: true, nested: { fooBar: true } })
+//=> { foo_bar: true, nested: { foo_bar: true } }
+
+snakecaseKeys({ foo: [{ barBaz: true }] })
+//=> { foo: [{ bar_baz: true }] }
+
+// Exclude keys from being converted
+snakecaseKeys({ fooBar: true, barBaz: false }, { exclude: ['fooBar'] })
+//=> { fooBar: true, bar_baz: false }
+
+// Exclude keys matching patterns from being converted
+snakecaseKeys({ fooBar: true, barBaz: false }, { exclude: [/^foo/] })
+//=> { fooBar: true, bar_baz: false }
+
+// Disable recursion for nested objects
+snakecaseKeys({ fooBar: { barBaz: true } }, { deep: false })
+//=> { foo_bar: { barBaz: true } }
+
+// Control recursion based on key/value
+snakecaseKeys({ fooBar: { barBaz: true }, date: new Date() }, {
+  shouldRecurse: (key, value) => !(value instanceof Date)
+})
+//=> { foo_bar: { bar_baz: true }, date: Date }
+```
+
+### CommonJS
+```js
+const snakecaseKeys = require('snakecase-keys')
+
+snakecaseKeys({ fooBar: true })
+//=> { foo_bar: true }
 ```
 
 ## API
 
-#### `snakecaseKeys(obj, options)` -> `object`
+### snakecaseKeys(input, options?)
 
-##### obj
+#### input
 
-*Required*  
-Type: `object | array[object]`
+Type: `object` | `Array<object>`
 
-A plain object or array of plain objects to transform into snake case (keys only).
+Object or array of objects to convert.
 
-##### options
+#### options
 
-*Optional*  
 Type: `object`
 
-###### deep
+##### deep
 
-Type: `boolean`  
+Type: `boolean`\
 Default: `true`
 
-Enables snake-casing of keys in nested objects.
+Recursively convert keys of nested objects.
 
-###### exclude
+##### exclude
 
-Type: `array[string || regexp]`  
+Type: `Array<string | RegExp>`\
 Default: `[]`
 
-An array of strings or regular expressions matching keys that will be excluded from snake-casing.
+Keys to exclude from conversion. Strings are matched exactly, regular expressions are tested against the key.
 
-###### `shouldRecurse(key, val)` -> `boolean`
+##### shouldRecurse
 
-*Optional*  
-Type: `function`
+Type: `(key: string, value: unknown) => boolean`\
+Default: `undefined`
 
-A function that determines if `val` should be recursed.
+Function to control recursion based on the current key and value. Return `true` to recurse into the value, `false` to skip recursion.
 
-Requires `deep: true`.
+## TypeScript
+
+This module includes TypeScript declarations.
 
 ## Related
 
