@@ -1,6 +1,6 @@
-import { assertType, expectTypeOf } from "vitest"
-import type { SnakeCaseKeys } from "."
-import snakecaseKeys from "."
+import { expectAssignable, expectType, expectNotType } from "tsd";
+import type { SnakeCaseKeys } from ".";
+import snakecaseKeys from ".";
 
 class Point {
 	x: number;
@@ -30,67 +30,69 @@ const person: Person = {
 };
 
 // Object
-expectTypeOf(snakecaseKeys({})).toEqualTypeOf<{}>();
-expectTypeOf(snakecaseKeys({ fooBar: true })).toEqualTypeOf<{ foo_bar: boolean }>();
-expectTypeOf(snakecaseKeys({ fooBar: true })).toMatchTypeOf<{ [key: string]: boolean }>();
+expectType<{}>(snakecaseKeys({}));
+expectType<{ foo_bar: boolean }>(snakecaseKeys({ fooBar: true }));
+expectAssignable<{ [key: string]: boolean }>(snakecaseKeys({ fooBar: true }));
 
-expectTypeOf(snakecaseKeys({ FooBar: true })).toEqualTypeOf<{ foo_bar: boolean }>();
+expectType<{ foo_bar: boolean }>(snakecaseKeys({ FooBar: true }));
 
 // Array
-expectTypeOf(snakecaseKeys([{ fooBar: true }])).toEqualTypeOf<{ foo_bar: boolean }[]>();
-expectTypeOf(snakecaseKeys([{ fooBar: true }])).toMatchTypeOf<Array<{ [key: string]: boolean }>>();
+expectType<{ foo_bar: boolean }[]>(snakecaseKeys([{ fooBar: true }]));
+expectAssignable<Array<{ [key: string]: boolean }>>(
+  snakecaseKeys([{ fooBar: true }])
+);
 
 // Deep
-assertType<{ foo_bar: { "foo-bar": { "foo bar": true; }; }; nested: { pointObject: Point; }; }>(
+expectType< { foo_bar: { "foo-bar": { "foo bar": true; }; }; nested: { pointObject: Point; }; }>(
   snakecaseKeys(
     { foo_bar: { "foo-bar": { "foo bar": true } }, nested: { pointObject: point } },
     { deep: false }
   )
 );
-expectTypeOf(
+expectType<{ foo_bar: { foo_bar: { foo_bar: boolean; }; }; nested: { point_object: Point; }; }>(
   snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } }, nested: { pointObject: point }  }, { deep: true })
-).toMatchTypeOf<{ foo_bar: { foo_bar: { foo_bar: boolean; }; }; nested: { point_object: Point; }; }>();
-expectTypeOf(
+);
+expectType<{ foo_bar: { foo_bar: boolean } }[]>(
   snakecaseKeys([{ "foo-bar": { foo_bar: true } }], { deep: true })
-).toEqualTypeOf<{ foo_bar: { foo_bar: boolean } }[]>();
-expectTypeOf(
+);
+expectType<{ date: Date }[]>(
   snakecaseKeys([{ date: new Date() }], { deep: true })
-).toEqualTypeOf<{ date: Date }[]>();
-expectTypeOf(
+);
+expectType<{ regexp: RegExp }[]>(
   snakecaseKeys([{ regexp: /example/ }], { deep: true })
-).toEqualTypeOf<{ regexp: RegExp }[]>();
-expectTypeOf(
+);
+expectType<{ error: Error }[]>(
   snakecaseKeys([{ error: new Error() }], { deep: true })
-).toEqualTypeOf<{ error: Error }[]>();
-expectTypeOf(
+);
+expectType<{ point_object: Point }[]>(
   snakecaseKeys([{ pointObject: point }], { deep: true })
-).toEqualTypeOf<{ point_object: Point }[]>();
-expectTypeOf(
+);
+expectType<{ person_object: Person }[]>(
   snakecaseKeys([{ personObject: person }], { deep: true })
-).toEqualTypeOf<{ person_object: Person }[]>();
-expectTypeOf(
+);
+expectType<{ date: Date, person_object: Person }[]>(
   snakecaseKeys([{ date: new Date(), personObject: person }], { deep: true })
-).toEqualTypeOf<{ date: Date, person_object: Person }[]>();
-expectTypeOf(
+);
+expectType<{ foo_bar: { foo_baz: { foo_bar: Point; }[]; }[]; }>(
   snakecaseKeys({ fooBar: [{ fooBaz: [{ fooBar: point }] }] }, { deep: true })
-).toEqualTypeOf<{ foo_bar: { foo_baz: { foo_bar: Point; }[]; }[]; }>();
+);
 
-// Deep with default (no deep option)
-expectTypeOf(
+// Deep with defalt(no deep option)
+expectType<{ foo_bar: { foo_bar: { foo_bar: boolean } } }>(
   snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } } })
-).toEqualTypeOf<{ foo_bar: { foo_bar: { foo_bar: boolean } } }>();
-expectTypeOf(
+);
+expectType<{ foo_bar: { foo_bar: boolean } }[]>(
   snakecaseKeys([{ "foo-bar": { foo_bar: true } }])
-).toEqualTypeOf<{ foo_bar: { foo_bar: boolean } }[]>();
-expectTypeOf(
+);
+expectType<{ date: Date }[]>(
   snakecaseKeys([{ date: new Date() }])
-).toEqualTypeOf<{ date: Date }[]>();
-expectTypeOf(
+);
+expectType<{ foo_bar: { foo_baz: { foo_bar: Point; }[]; }[]; }>(
   snakecaseKeys({ fooBar: [{ fooBaz: [{ fooBar: point }] }] })
-).toEqualTypeOf<{ foo_bar: { foo_baz: { foo_bar: Point; }[]; }[]; }>();
+);
 
 // Exclude
-assertType<{ foo_bar: boolean; barBaz: true }>(
+expectType<{ foo_bar: boolean; barBaz: true }>(
   snakecaseKeys(
     { fooBar: true, barBaz: true },
     {
@@ -102,43 +104,45 @@ assertType<{ foo_bar: boolean; barBaz: true }>(
 // Verify exported type `SnakeCaseKeys`
 // Object
 const objectInput = { fooBar: true };
-expectTypeOf(snakecaseKeys(objectInput)).toEqualTypeOf<SnakeCaseKeys<typeof objectInput>>();
-expectTypeOf(snakecaseKeys(objectInput)).toMatchTypeOf<SnakeCaseKeys<{ [key: string]: boolean }>>();
+expectType<SnakeCaseKeys<typeof objectInput>>(snakecaseKeys(objectInput));
+expectAssignable<SnakeCaseKeys<{ [key: string]: boolean }>>(
+  snakecaseKeys(objectInput)
+);
 
 // Array
 const arrayInput = [{ fooBar: true }];
-expectTypeOf(snakecaseKeys([{ fooBar: true }])).toEqualTypeOf<SnakeCaseKeys<typeof arrayInput>>();
-expectTypeOf(snakecaseKeys(arrayInput)).toMatchTypeOf<SnakeCaseKeys<typeof arrayInput>>();
+expectType<SnakeCaseKeys<typeof arrayInput>>(snakecaseKeys([{ fooBar: true }]));
+expectAssignable<SnakeCaseKeys<typeof arrayInput>>(snakecaseKeys(arrayInput));
 
 // Deep
 const deepInput = { foo_bar: { "foo-bar": { "foo bar": true } } };
-expectTypeOf(
+expectType<SnakeCaseKeys<typeof deepInput, false, []>>(
   snakecaseKeys(deepInput, { deep: false })
-).toEqualTypeOf<SnakeCaseKeys<typeof deepInput, false, []>>();
-expectTypeOf(
+);
+expectType<SnakeCaseKeys<typeof deepInput>>(
   snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } } }, { deep: true })
-).toEqualTypeOf<SnakeCaseKeys<typeof deepInput>>();
+);
 const deepArrayInput = [{ "foo-bar": { foo_bar: true } }];
-expectTypeOf(
+expectType<SnakeCaseKeys<typeof deepArrayInput>>(
   snakecaseKeys([{ "foo-bar": { foo_bar: true } }], { deep: true })
-).toEqualTypeOf<SnakeCaseKeys<typeof deepArrayInput>>();
+);
 
-// Deep with default (no deep option)
-expectTypeOf(
+// Deep with defalt(no deep option)
+expectType<SnakeCaseKeys<typeof deepInput>>(
   snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } } })
-).toEqualTypeOf<SnakeCaseKeys<typeof deepInput>>();
-expectTypeOf(
+);
+expectType<SnakeCaseKeys<typeof deepArrayInput>>(
   snakecaseKeys([{ "foo-bar": { foo_bar: true } }])
-).toEqualTypeOf<SnakeCaseKeys<typeof deepArrayInput>>();
+);
 
 // Exclude
 const excludeInput = { fooBar: true, barBaz: true };
 const exclude = ["foo", "barBaz", /^baz/] as const;
-expectTypeOf(
+expectType<SnakeCaseKeys<typeof excludeInput, true, typeof exclude>>(
   snakecaseKeys(excludeInput, {
     exclude,
   })
-).toEqualTypeOf<SnakeCaseKeys<typeof excludeInput, true, typeof exclude>>();
+);
 
 // Verify exported type `SnakeCaseKeys`
 // Mapping types and retaining properties of keys
@@ -164,10 +168,8 @@ const objectInputData: ObjectDataType = {
   fooBar: "fooBar",
   baz: "baz",
 };
-expectTypeOf(snakecaseKeys(objectInputData)).toEqualTypeOf<ConvertedObjectDataType>();
-// Negative assertion
-// @ts-expect-error
-expectTypeOf(snakecaseKeys(objectInputData)).toEqualTypeOf<InvalidConvertedObjectDataType>();
+expectType<ConvertedObjectDataType>(snakecaseKeys(objectInputData));
+expectNotType<InvalidConvertedObjectDataType>(snakecaseKeys(objectInputData));
 
 // Array
 type ArrayDataType = ObjectDataType[];
@@ -178,10 +180,9 @@ const arrayInputData: ArrayDataType = [
     baz: "baz",
   },
 ];
-expectTypeOf(snakecaseKeys(arrayInputData)).toEqualTypeOf<ConvertedObjectDataType[]>();
-// Negative assertion
-// @ts-expect-error
-expectTypeOf(snakecaseKeys(arrayInputData)).toEqualTypeOf<InvalidConvertedObjectDataType[]>();
+expectType<ConvertedObjectDataType[]>(snakecaseKeys(arrayInputData));
+<ConvertedObjectDataType[]>snakecaseKeys(arrayInputData);
+expectNotType<InvalidConvertedObjectDataType[]>(snakecaseKeys(arrayInputData));
 
 // Deep
 type DeepObjectType = {
@@ -275,21 +276,21 @@ const deepInputData: DeepObjectType = {
     },
   },
 };
-expectTypeOf(
+expectType<ConvertedDeepObjectDataType>(
   snakecaseKeys(deepInputData, { deep: false })
-).toEqualTypeOf<ConvertedDeepObjectDataType>();
-// Negative assertion
-// @ts-expect-error
-expectTypeOf(snakecaseKeys(deepInputData, { deep: false })).toEqualTypeOf<InvalidConvertedDeepObjectDataType>();
+);
+expectNotType<InvalidConvertedDeepObjectDataType>(
+  snakecaseKeys(deepInputData, { deep: false })
+);
 
-expectTypeOf(
+expectType<ConvertedDeepObjectDataTypeDeeply>(
   snakecaseKeys(deepInputData, { deep: true })
-).toEqualTypeOf<ConvertedDeepObjectDataTypeDeeply>();
+);
 
-// Deep with default (no deep option)
-expectTypeOf(
+// Deep with defalt(no deep option)
+expectType<ConvertedDeepObjectDataTypeDeeply>(
   snakecaseKeys(deepInputData)
-).toEqualTypeOf<ConvertedDeepObjectDataTypeDeeply>();
+);
 
 // Exclude
 type InvalidConvertedExcludeObjectDataType = {
@@ -307,14 +308,16 @@ const excludeInputData: ObjectDataType = {
   barBaz: "barBaz",
   baz: "baz",
 };
-expectTypeOf(
+expectType<ConvertedExcludeObjectDataType>(
   snakecaseKeys(excludeInputData, {
     exclude,
   })
-).toEqualTypeOf<ConvertedExcludeObjectDataType>();
-// Negative assertion
-// @ts-expect-error
-expectTypeOf(snakecaseKeys(excludeInputData, { exclude })).toEqualTypeOf<InvalidConvertedExcludeObjectDataType>();
+);
+expectNotType<InvalidConvertedExcludeObjectDataType>(
+  snakecaseKeys(excludeInputData, {
+    exclude,
+  })
+);
 
 // Test for union type
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -325,6 +328,6 @@ const nullCamelcased: SnakeCaseKeys<{fooBar: {fooProp: string} | null}, true>
 	= snakecaseKeys({fooBar: null}, {deep: true});
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-expectTypeOf(objectCamelcased).toEqualTypeOf<{foo_bar: {foo_prop: string} | null}>();
+expectType<{foo_bar: {foo_prop: string} | null}>(objectCamelcased);
 // eslint-disable-next-line @typescript-eslint/ban-types
-expectTypeOf(nullCamelcased).toEqualTypeOf<{foo_bar: {foo_prop: string} | null}>();
+expectType<{foo_bar: {foo_prop: string} | null}>(nullCamelcased);

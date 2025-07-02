@@ -18,8 +18,7 @@
     "types": "./index.d.ts"
   },
   "scripts": {
-    "test": "standard && vitest run --typecheck",
-    "attw": "attw --pack . --profile esm-only --ignore-rules cjs-resolves-to-esm"
+    "test": "standard && tape test.js && tsd"
   },
   "keywords": [
     "snake",
@@ -29,9 +28,9 @@
     "object"
   ],
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.2",
     "standard": "^17.1.2",
-    "vitest": "^3.2.4"
+    "tape": "^5.9.0",
+    "tsd": "^0.32.0"
   },
   "files": [
     "index.js",
@@ -39,8 +38,7 @@
   ],
   "dependencies": {
     "change-case": "^4.1.2",
-    "map-obj": "^4.2.0",
-    "type-fest": "^4.15.0"
+    "map-obj": "^4.2.0"
   },
   "engines": {
     "node": ">=20"
