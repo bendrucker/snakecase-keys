@@ -26,7 +26,8 @@
   },
   "scripts": {
     "build": "tsdown",
-    "test": "vitest --typecheck"
+    "test": "vitest --typecheck",
+    "attw": "attw --pack . --ignore-rules false-export-default"
   },
   "keywords": [
     "snake",
@@ -36,7 +37,7 @@
     "object"
   ],
   "devDependencies": {
-    "standard": "^17.0.0",
+    "@arethetypeswrong/cli": "^0.18.2",
     "tsdown": "^0.12.9",
     "vitest": "^3.2.4"
   },
