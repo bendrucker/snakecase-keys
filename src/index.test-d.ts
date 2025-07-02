@@ -1,4 +1,4 @@
-import { expectTypeOf } from 'vitest';
+import { assertType, expectTypeOf } from 'vitest';
 import type { SnakeCaseKeys } from './';
 import snakecaseKeys from './';
 
@@ -41,13 +41,12 @@ expectTypeOf(snakecaseKeys([{ fooBar: true }])).toEqualTypeOf<{ foo_bar: boolean
 expectTypeOf(snakecaseKeys([{ fooBar: true }])).toMatchTypeOf<Array<{ [key: string]: boolean }>>();
 
 // Deep
-// The following test is too strict for Vitest's type system and causes a literal type error, so we comment it out.
-// expectTypeOf(
-//   snakecaseKeys(
-//     { foo_bar: { "foo-bar": { "foo bar": true } }, nested: { pointObject: point } },
-//     { deep: false }
-//   )
-// ).toMatchTypeOf<{ foo_bar: { "foo-bar": { "foo bar": true; }; }; nested: { pointObject: Point; }; }>();
+assertType<{ foo_bar: { "foo-bar": { "foo bar": true; }; }; nested: { pointObject: Point; }; }>(
+  snakecaseKeys(
+    { foo_bar: { "foo-bar": { "foo bar": true } }, nested: { pointObject: point } },
+    { deep: false }
+  )
+);
 expectTypeOf(
   snakecaseKeys({ foo_bar: { "foo-bar": { "foo bar": true } }, nested: { pointObject: point }  }, { deep: true })
 ).toMatchTypeOf<{ foo_bar: { foo_bar: { foo_bar: boolean; }; }; nested: { point_object: Point; }; }>();
@@ -91,15 +90,14 @@ expectTypeOf(
 ).toEqualTypeOf<{ foo_bar: { foo_baz: { foo_bar: Point; }[]; }[]; }>();
 
 // Exclude
-// The following test is too strict for Vitest's type system and causes a literal type error, so we comment it out.
-// expectTypeOf(
-//   snakecaseKeys(
-//     { fooBar: true, barBaz: true },
-//     {
-//       exclude: ["foo", "barBaz", /^baz/] as const,
-//     }
-//   )
-// ).toMatchTypeOf<{ foo_bar: boolean; barBaz: true }>();
+assertType<{ foo_bar: boolean; barBaz: true }>(
+  snakecaseKeys(
+    { fooBar: true, barBaz: true },
+    {
+      exclude: ["foo", "barBaz", /^baz/] as const,
+    }
+  )
+);
 
 // Verify exported type `SnakeCaseKeys`
 // Object
