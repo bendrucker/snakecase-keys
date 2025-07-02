@@ -6,6 +6,7 @@
       "module": "preserve",
       "moduleResolution": "bundler",
       "resolveJsonModule": true,
+      "types": ["node"],
       "strict": true,
       "noUnusedLocals": true,
       "declaration": true,
@@ -13,5 +14,6 @@
       "isolatedModules": true,
       "verbatimModuleSyntax": true,
       "skipLibCheck": true
-    }
+    },
+    "include": ["src"]
 }

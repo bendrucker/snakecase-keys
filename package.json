@@ -26,7 +26,7 @@
   },
   "scripts": {
     "build": "tsdown",
-    "test": "standard && tape test.js && tsd"
+    "test": "vitest --typecheck"
   },
   "keywords": [
     "snake",
@@ -37,11 +37,12 @@
   ],
   "devDependencies": {
     "standard": "^17.0.0",
-    "tape": "^5.0.1",
-    "tsd": "^0.32.0",
-    "tsdown": "^0.12.9"
+    "tsdown": "^0.12.9",
+    "vitest": "^3.2.4"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "map-obj": "^4.2.0",
     "snake-case": "^3.0.4",

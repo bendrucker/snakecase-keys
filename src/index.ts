@@ -1,6 +1,6 @@
 import map from 'map-obj';
 import { snakeCase, type Options as SnakeCaseOptions } from 'snake-case';
-import { type SnakeCase } from 'type-fest';
+import type { SnakeCase } from 'type-fest';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type EmptyTuple = [];
