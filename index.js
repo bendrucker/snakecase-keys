@@ -1,7 +1,7 @@
 'use strict'
 
 import map from 'map-obj'
-import { snakeCase } from 'change-case'
+import { snakeCase } from 'snake-case'
 
 const PlainObjectConstructor = {}.constructor
 

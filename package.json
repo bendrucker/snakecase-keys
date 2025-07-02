@@ -37,10 +37,11 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "change-case": "^4.1.2",
-    "map-obj": "^4.2.0"
+    "map-obj": "^4.2.0",
+    "snake-case": "^3.0.4",
+    "type-fest": "^4.15.0"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=18"
   }
 }
