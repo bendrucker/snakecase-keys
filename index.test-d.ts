@@ -1,6 +1,6 @@
-import { assertType, expectTypeOf } from 'vitest';
-import type { SnakeCaseKeys } from './';
-import snakecaseKeys from './';
+import { assertType, expectTypeOf } from "vitest"
+import type { SnakeCaseKeys } from "."
+import snakecaseKeys from "."
 
 class Point {
 	x: number;

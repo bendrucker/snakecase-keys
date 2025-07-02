@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import Snake from './'
+import Snake from '.'
 
 test('basic snakecase', () => {
   expect(Snake({ fooBar: 'baz', nested: { fooBar: 'baz' } })).toEqual({ foo_bar: 'baz', nested: { foo_bar: 'baz' } })
@@ -70,31 +70,25 @@ test('shouldRecurse option', () => {
 })
 
 test('not a plain object(primitive value)', () => {
-  // @ts-expect-error: test
   expect(() => Snake(1)).toThrowError('obj must be an plain object')
 })
 
 test('not a plain object(function value)', () => {
-  // @ts-expect-error: test
   expect(() => Snake(() => { return 1 })).toThrowError('obj must be an plain object')
 })
 
 test('not a plain object(instance value)', () => {
-  // @ts-expect-error: test
   expect(() => Snake(new Date())).toThrowError('obj must be an plain object')
 })
 
 test('not array of plain objects(primitive value)', () => {
-  // @ts-expect-error: test
   expect(() => Snake([1, { fooBar: 'baz' }])).toThrowError('obj must be array of plain objects')
 })
 
 test('not array of plain objects(function value)', () => {
-  // @ts-expect-error: test
   expect(() => Snake([() => { return 1 }, { fooBar: 'baz' }])).toThrowError('obj must be array of plain objects')
 })
 
 test('not array of plain objects(instance value)', () => {
-  // @ts-expect-error: test
   expect(() => Snake([new Date(), { fooBar: 'baz' }])).toThrowError('obj must be array of plain objects')
 })

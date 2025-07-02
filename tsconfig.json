@@ -1,18 +1,12 @@
 {
-    "compilerOptions": {
-      "target": "esnext",
-      "lib": ["es2023"],
-      "moduleDetection": "force",
-      "module": "preserve",
-      "moduleResolution": "bundler",
-      "resolveJsonModule": true,
-      "strict": true,
-      "noUnusedLocals": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "isolatedModules": true,
-      "verbatimModuleSyntax": true,
-      "skipLibCheck": true
-    },
-    "include": ["src"]
+	"compilerOptions": {
+		"lib": ["ES2021"],
+		"module": "ESNext",
+		"strict": true,
+		"skipLibCheck": true,
+		"isolatedModules": true,
+		"resolveJsonModule": true,
+		"moduleResolution": "bundler",
+		"useDefineForClassFields": true,
+	}
 }
