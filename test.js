@@ -1,7 +1,7 @@
 'use strict'
 
-const test = require('tape')
-const Snake = require('./')
+import test from 'tape'
+import Snake from './index.js'
 
 test(function (t) {
   t.deepEqual(Snake({ fooBar: 'baz', nested: { fooBar: 'baz' } }), { foo_bar: 'baz', nested: { foo_bar: 'baz' } })

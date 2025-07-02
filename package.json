@@ -1,6 +1,9 @@
 {
   "name": "snakecase-keys",
-  "main": "index.js",
+  "type": "module",
+  "main": "./index.js",
+  "module": "./index.js",
+  "types": "./index.d.ts",
   "version": "8.0.1",
   "description": "Convert an object's keys to snake case",
   "license": "MIT",
@@ -9,6 +12,10 @@
     "name": "Ben Drucker",
     "email": "bvdrucker@gmail.com",
     "url": "bendrucker.me"
+  },
+  "exports": {
+    "import": "./index.js",
+    "types": "./index.d.ts"
   },
   "scripts": {
     "test": "standard && tape test.js && tsd"
@@ -21,8 +28,8 @@
     "object"
   ],
   "devDependencies": {
-    "standard": "^17.0.0",
-    "tape": "^5.0.1",
+    "standard": "^17.1.2",
+    "tape": "^5.9.0",
     "tsd": "^0.32.0"
   },
   "files": [
@@ -30,11 +37,10 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "map-obj": "^4.2.0",
-    "snake-case": "^3.0.4",
-    "type-fest": "^4.15.0"
+    "change-case": "^4.1.2",
+    "map-obj": "^4.2.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }

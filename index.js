@@ -1,11 +1,11 @@
 'use strict'
 
-const map = require('map-obj')
-const { snakeCase } = require('snake-case')
+import map from 'map-obj'
+import { snakeCase } from 'change-case'
 
 const PlainObjectConstructor = {}.constructor
 
-module.exports = function (obj, options) {
+function snakecaseKeys (obj, options) {
   if (Array.isArray(obj)) {
     if (obj.some(item => item.constructor !== PlainObjectConstructor)) {
       throw new Error('obj must be array of plain objects')
@@ -40,3 +40,5 @@ function mapperOptions (key, val, options) {
     ? { shouldRecurse: options.shouldRecurse(key, val) }
     : undefined
 }
+
+export default snakecaseKeys
