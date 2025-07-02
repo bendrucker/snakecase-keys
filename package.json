@@ -28,8 +28,8 @@
     "object"
   ],
   "devDependencies": {
-    "standard": "^17.1.2",
-    "tape": "^5.9.0",
+    "standard": "^17.0.0",
+    "tape": "^5.0.1",
     "tsd": "^0.32.0"
   },
   "files": [
