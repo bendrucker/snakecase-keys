@@ -14,7 +14,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: npm test
+    - run: npm run attw
+    - run: npm run test
     strategy:
       matrix:
         node-version:
