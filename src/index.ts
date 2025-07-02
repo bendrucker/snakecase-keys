@@ -115,7 +115,7 @@ function snakecaseKeys<
     }
   }
 
-  const opts = Object.assign({ deep: true, exclude: [] as ReadonlyArray<string | RegExp>, parsingOptions: {} }, options);
+  const opts = Object.assign({ deep: true, exclude: [], parsingOptions: {} }, options);
 
   return map(
     obj,
