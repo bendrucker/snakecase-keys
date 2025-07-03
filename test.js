@@ -156,3 +156,17 @@ test('custom snakeCase function with nested objects', function (t) {
   )
   t.end()
 })
+
+test('undefined values in arrays with deep: true', function (t) {
+  t.deepEqual(
+    Snake({ fooBar: [undefined, 'value'] }, { deep: true }),
+    { foo_bar: [undefined, 'value'] }
+  )
+
+  t.deepEqual(
+    Snake({ nested: { fooBar: [undefined, { bazQux: 'value' }] } }, { deep: true }),
+    { nested: { foo_bar: [undefined, { baz_qux: 'value' }] } }
+  )
+
+  t.end()
+})
