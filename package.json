@@ -37,8 +37,8 @@
     "index.d.ts"
   ],
   "dependencies": {
+    "change-case": "^5.4.4",
     "map-obj": "^5.0.2",
-    "snake-case": "^3.0.4",
     "type-fest": "^4.15.0"
   },
   "engines": {

@@ -55,9 +55,9 @@ test('exclude', function (t) {
 })
 
 test('parsing options', function (t) {
-  const camelCaseRegex = /([a-z])([A-Z])/g
+  const splitOnCamelCase = input => input.split(/(?=[A-Z])/)
   t.deepEqual(
-    Snake({ 'fooBar.baz': 'qux', 'bar.bazQux': 'foo' }, { parsingOptions: { stripRegexp: camelCaseRegex } }),
+    Snake({ 'fooBar.baz': 'qux', 'bar.bazQux': 'foo' }, { parsingOptions: { split: splitOnCamelCase } }),
     { 'foo_bar.baz': 'qux', 'bar.baz_qux': 'foo' }
   )
   t.end()
