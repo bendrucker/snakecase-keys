@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install --save snakecase-keys
+npm install snakecase-keys
 ```
 
 
@@ -15,11 +15,11 @@ $ npm install --save snakecase-keys
 ```js
 import snakecaseKeys from 'snakecase-keys'
 
-snakecaseKeys({fooBar: 'baz'})
-//=> {foo_bar: 'baz'}
+snakecaseKeys({ fooBar: 'baz' })
+//=> { foo_bar: 'baz' }
 
-snakecaseKeys({'foo-bar': true, nested: {fooBaz: 'bar'}});
-//=> {foo_bar: true, nested: {foo_baz: 'bar'}}
+snakecaseKeys({ 'foo-bar': true, nested: { fooBaz: 'bar' } })
+//=> { foo_bar: true, nested: { foo_baz: 'bar' } }
 ```
 
 ## API
@@ -29,7 +29,7 @@ snakecaseKeys({'foo-bar': true, nested: {fooBaz: 'bar'}});
 ##### obj
 
 *Required*  
-Type: `object | array[object]`
+Type: `object | Array<object>`
 
 A plain object or array of plain objects to transform into snake case (keys only).
 
@@ -47,7 +47,7 @@ Enables snake-casing of keys in nested objects.
 
 ###### exclude
 
-Type: `array[string || regexp]`  
+Type: `Array<string | RegExp>`  
 Default: `[]`
 
 An array of strings or regular expressions matching keys that will be excluded from snake-casing.
@@ -80,7 +80,7 @@ See [`change-case`](https://github.com/blakeembrey/change-case) for full documen
 ###### snakeCase
 
 *Optional*
-Type: `function(string)` -> `string`
+Type: `(key: string) => string`
 
 Custom function to convert a key to snake case. Use this to fully override the default behavior of the library and convert keys according to your own conventions. When provided, the return type will be a generic `Record<string, unknown>`, since specific keys cannot be inferred from the custom function.
 
