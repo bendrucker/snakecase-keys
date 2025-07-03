@@ -38,7 +38,7 @@
   ],
   "dependencies": {
     "map-obj": "^5.0.2",
-    "snake-case": "^4.0.0",
+    "snake-case": "^3.0.4",
     "type-fest": "^4.15.0"
   },
   "engines": {
