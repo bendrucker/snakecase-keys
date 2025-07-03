@@ -18,9 +18,11 @@ module.exports = function (obj, options) {
 
   options = Object.assign({ deep: true, exclude: [], parsingOptions: {} }, options)
 
+  const convertCase = options.snakeCase || ((key) => snakeCase(key, options.parsingOptions))
+
   return map(obj, function (key, val) {
     return [
-      matches(options.exclude, key) ? key : snakeCase(key, options.parsingOptions),
+      matches(options.exclude, key) ? key : convertCase(key),
       val,
       mapperOptions(key, val, options)
     ]
