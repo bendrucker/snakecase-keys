@@ -38,39 +38,38 @@ type AppendPath<S extends string, Last extends string> = S extends ""
   ? Last
   : `${S}.${Last}`;
 
-declare namespace snakecaseKeys {
-  /**
-  Convert keys of an object to snake-case strings.
-  @template T - Input object or array.
-  @template Deep - Deep conversion flag.
-  @template Exclude - Excluded keys.
-  @template Path - Path of keys.
-  */
-  export type SnakeCaseKeys<
-    T extends ObjectUnion | ReadonlyArray<Record<string, unknown>>,
-    Deep extends boolean = true,
-    Exclude extends readonly unknown[] = EmptyTuple,
-    Path extends string = ""
-  > = T extends ReadonlyArray<Record<string, unknown>>
-    ? // Handle arrays or tuples.
+/**
+Convert keys of an object to snake-case strings.
+@template T - Input object or array.
+@template Deep - Deep conversion flag.
+@template Exclude - Excluded keys.
+@template Path - Path of keys.
+*/
+export type SnakeCaseKeys<
+  T extends ObjectUnion | ReadonlyArray<Record<string, unknown>>,
+  Deep extends boolean = true,
+  Exclude extends readonly unknown[] = EmptyTuple,
+  Path extends string = ""
+> = T extends ReadonlyArray<Record<string, unknown>>
+  ? // Handle arrays or tuples.
+    {
+      [P in keyof T]: T[P] extends Record<string, unknown> | ReadonlyArray<Record<string, unknown>>
+      ? SnakeCaseKeys<T[P], Deep, Exclude>
+      : T[P];
+    }
+  : T extends Record<string, unknown>
+    ? // Handle objects.
       {
-        [P in keyof T]: T[P] extends Record<string, unknown> | ReadonlyArray<Record<string, unknown>>
-        ? SnakeCaseKeys<T[P], Deep, Exclude>
-        : T[P];
+        [P in keyof T as [Includes<Exclude, P>] extends [true]
+          ? P
+          : SnakeCase<P>]: [Deep] extends [true]
+          ? T[P] extends ObjectUnion | ReadonlyArray<Record<string, unknown>>
+            ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
+            : T[P]
+          : T[P];
       }
-    : T extends Record<string, unknown>
-      ? // Handle objects.
-        {
-          [P in keyof T as [Includes<Exclude, P>] extends [true]
-            ? P
-            : SnakeCase<P>]: [Deep] extends [true]
-            ? T[P] extends ObjectUnion | ReadonlyArray<Record<string, unknown>>
-              ? SnakeCaseKeys<T[P], Deep, Exclude, AppendPath<Path, P & string>>
-              : T[P]
-            : T[P];
-        }
-      : // Return anything else as-is.
-        T;
+    : // Return anything else as-is.
+      T;
 
   /**
   Convert keys using a custom function - returns generic object type.
@@ -82,40 +81,39 @@ declare namespace snakecaseKeys {
     ? Array<Record<string, unknown>>
     : Record<string, unknown>;
 
-  interface Options {
-    /**
-		Recurse nested objects and objects in arrays.
-		@default true
-		*/
-    readonly deep?: boolean;
+export interface Options {
+  /**
+  Recurse nested objects and objects in arrays.
+  @default true
+  */
+  readonly deep?: boolean;
 
-    /**
-		Exclude keys from being snakeCased.
-		@default []
-		*/
-    readonly exclude?: ReadonlyArray<string | RegExp>;
+  /**
+  Exclude keys from being snakeCased.
+  @default []
+  */
+  readonly exclude?: ReadonlyArray<string | RegExp>;
 
-    /**
-    A function that determines whether to recurse for a specific key and value.
-    */
-   readonly shouldRecurse?: {
-    (key: any, value: any): boolean;
-   }
+  /**
+  A function that determines whether to recurse for a specific key and value.
+  */
+ readonly shouldRecurse?: {
+  (key: any, value: any): boolean;
+ }
 
-    /**
-    Options object that gets passed to snake-case parsing function.
-    @default {}
-    */
-    readonly parsingOptions?: SnakeCaseOptions;
+  /**
+  Options object that gets passed to snake-case parsing function.
+  @default {}
+  */
+  readonly parsingOptions?: SnakeCaseOptions;
 
-    /**
-    Custom function to convert keys to snake case.
-    When provided, TypeScript will return a generic Record<string, unknown> type
-    since the transformation cannot be determined at compile time.
-    @default Built-in snake case conversion
-    */
-    readonly snakeCase?: (key: string) => string;
-  }
+  /**
+  Custom function to convert keys to snake case.
+  When provided, TypeScript will return a generic Record<string, unknown> type
+  since the transformation cannot be determined at compile time.
+  @default Built-in snake case conversion
+  */
+  readonly snakeCase?: (key: string) => string;
 }
 
 /**
@@ -125,25 +123,25 @@ Convert object keys to snake using [`to-snake-case`](https://github.com/ianstorm
 */
 declare function snakecaseKeys<
   T extends Record<string, unknown> | ReadonlyArray<Record<string, unknown>>,
-  Options extends snakecaseKeys.Options
+  TOptions extends Options
 >(
   input: T,
-  options: Options & { snakeCase: (key: string) => string }
-): snakecaseKeys.CustomSnakeCaseKeys<
+  options: TOptions & { snakeCase: (key: string) => string }
+): CustomSnakeCaseKeys<
   T,
-  Options["deep"] extends boolean ? Options["deep"] : true
+  TOptions["deep"] extends boolean ? TOptions["deep"] : true
 >;
 
 declare function snakecaseKeys<
   T extends Record<string, unknown> | ReadonlyArray<Record<string, unknown>>,
-  Options extends snakecaseKeys.Options
+  TOptions extends Options
 >(
   input: T,
-  options?: Options
-): snakecaseKeys.SnakeCaseKeys<
+  options?: TOptions
+): SnakeCaseKeys<
   T,
-  Options["deep"] extends boolean ? Options["deep"] : true,
-  WithDefault<Options["exclude"], EmptyTuple>
+  TOptions["deep"] extends boolean ? TOptions["deep"] : true,
+  WithDefault<TOptions["exclude"], EmptyTuple>
 >;
 
-export = snakecaseKeys;
+export default snakecaseKeys;
