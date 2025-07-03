@@ -61,6 +61,20 @@ A function that determines if `val` should be recursed.
 
 Requires `deep: true`.
 
+###### parsingOptions
+
+Type: `object`  
+Default: `{}`
+
+Options object passed to the built-in `snake-case` parsing function. See [`snake-case`](https://github.com/blakeembrey/change-case/tree/master/packages/snake-case) for available options.
+
+###### snakeCase
+
+*Optional*
+Type: `function(string)` -> `string`
+
+Custom function to convert a key to snake case. Use this to fully override the default behavior of the library and convert keys according to your own conventions. When provided, the return type will be a generic `Record<string, unknown>`, since specific keys cannot be inferred from the custom function.
+
 ## Related
 
 * [camelcase-keys](https://github.com/sindresorhus/camelcase-keys)

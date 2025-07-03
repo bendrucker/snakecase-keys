@@ -72,6 +72,16 @@ declare namespace snakecaseKeys {
       : // Return anything else as-is.
         T;
 
+  /**
+  Convert keys using a custom function - returns generic object type.
+  */
+  export type CustomSnakeCaseKeys<
+    T extends ObjectUnion | ReadonlyArray<Record<string, unknown>>,
+    Deep extends boolean = true
+  > = T extends ReadonlyArray<unknown>
+    ? Array<Record<string, unknown>>
+    : Record<string, unknown>;
+
   interface Options {
     /**
 		Recurse nested objects and objects in arrays.
@@ -97,6 +107,14 @@ declare namespace snakecaseKeys {
     @default {}
     */
     readonly parsingOptions?: SnakeCaseOptions;
+
+    /**
+    Custom function to convert keys to snake case.
+    When provided, TypeScript will return a generic Record<string, unknown> type
+    since the transformation cannot be determined at compile time.
+    @default Built-in snake case conversion
+    */
+    readonly snakeCase?: (key: string) => string;
   }
 }
 
@@ -105,6 +123,17 @@ Convert object keys to snake using [`to-snake-case`](https://github.com/ianstorm
 @param input - Object or array of objects to snake-case.
 @param options - Options of conversion.
 */
+declare function snakecaseKeys<
+  T extends Record<string, unknown> | ReadonlyArray<Record<string, unknown>>,
+  Options extends snakecaseKeys.Options
+>(
+  input: T,
+  options: Options & { snakeCase: (key: string) => string }
+): snakecaseKeys.CustomSnakeCaseKeys<
+  T,
+  Options["deep"] extends boolean ? Options["deep"] : true
+>;
+
 declare function snakecaseKeys<
   T extends Record<string, unknown> | ReadonlyArray<Record<string, unknown>>,
   Options extends snakecaseKeys.Options
