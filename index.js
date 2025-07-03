@@ -10,6 +10,20 @@ function snakecaseKeys (obj, options) {
     if (obj.some(item => item.constructor !== PlainObjectConstructor)) {
       throw new Error('obj must be array of plain objects')
     }
+
+    options = Object.assign({ deep: true, exclude: [], parsingOptions: {} }, options)
+    const convertCase = options.snakeCase || ((key) => snakeCase(key, options.parsingOptions))
+
+    // Handle arrays by mapping each element
+    return obj.map(item => {
+      return map(item, function (key, val) {
+        return [
+          matches(options.exclude, key) ? key : convertCase(key),
+          val,
+          mapperOptions(key, val, options)
+        ]
+      }, options)
+    })
   } else {
     if (obj.constructor !== PlainObjectConstructor) {
       throw new Error('obj must be an plain object')
