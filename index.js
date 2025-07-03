@@ -11,12 +11,12 @@ function snakecaseKeys (obj, options) {
       throw new Error('obj must be array of plain objects')
     }
 
-    options = Object.assign({ deep: true, exclude: [], parsingOptions: {} }, options)
+    options = { deep: true, exclude: [], parsingOptions: {}, ...options }
     const convertCase = options.snakeCase || ((key) => snakeCase(key, options.parsingOptions))
 
     // Handle arrays by mapping each element
     return obj.map(item => {
-      return map(item, function (key, val) {
+      return map(item, (key, val) => {
         return [
           matches(options.exclude, key) ? key : convertCase(key),
           val,
@@ -30,11 +30,11 @@ function snakecaseKeys (obj, options) {
     }
   }
 
-  options = Object.assign({ deep: true, exclude: [], parsingOptions: {} }, options)
+  options = { deep: true, exclude: [], parsingOptions: {}, ...options }
 
   const convertCase = options.snakeCase || ((key) => snakeCase(key, options.parsingOptions))
 
-  return map(obj, function (key, val) {
+  return map(obj, (key, val) => {
     return [
       matches(options.exclude, key) ? key : convertCase(key),
       val,
@@ -44,7 +44,7 @@ function snakecaseKeys (obj, options) {
 }
 
 function matches (patterns, value) {
-  return patterns.some(function (pattern) {
+  return patterns.some(pattern => {
     return typeof pattern === 'string'
       ? pattern === value
       : pattern.test(value)
