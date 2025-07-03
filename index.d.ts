@@ -1,5 +1,5 @@
 import { SnakeCase } from "type-fest";
-import { Options as SnakeCaseOptions } from "snake-case";
+import { Options as SnakeCaseOptions } from "change-case";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type EmptyTuple = [];

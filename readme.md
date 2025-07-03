@@ -13,7 +13,7 @@ $ npm install --save snakecase-keys
 ## Usage
 
 ```js
-var snakecaseKeys = require('snakecase-keys')
+import snakecaseKeys from 'snakecase-keys'
 
 snakecaseKeys({fooBar: 'baz'})
 //=> {foo_bar: 'baz'}
@@ -66,7 +66,16 @@ Requires `deep: true`.
 Type: `object`  
 Default: `{}`
 
-Options object passed to the built-in `snake-case` parsing function. See [`snake-case`](https://github.com/blakeembrey/change-case/tree/master/packages/snake-case) for available options.
+Options object passed to the built-in `snakeCase` function from `change-case`. Available options include:
+
+- `split`: Custom function to split strings into words
+- `locale`: Locale for case conversion
+- `separateNumbers`: Whether to separate numbers (deprecated, use `splitSeparateNumbers`)
+- `delimiter`: Custom delimiter between words
+- `prefixCharacters`: Characters to preserve at start
+- `suffixCharacters`: Characters to preserve at end
+
+See [`change-case`](https://github.com/blakeembrey/change-case) for full documentation.
 
 ###### snakeCase
 
