@@ -331,3 +331,25 @@ const nullCamelcased: SnakeCaseKeys<{fooBar: {fooProp: string} | null}, true>
 expectType<{foo_bar: {foo_prop: string} | null}>(objectCamelcased);
 // eslint-disable-next-line @typescript-eslint/ban-types
 expectType<{foo_bar: {foo_prop: string} | null}>(nullCamelcased);
+
+// Test custom snakeCase function
+const customSnakeCase = (key: string): string => {
+  return key.replace(/([A-Z])/g, '_$1').toLowerCase();
+};
+
+// When using custom function, types become generic Record<string, unknown>
+const customResult = snakecaseKeys({ fooBar: 'test', barBaz: 123 }, { snakeCase: customSnakeCase });
+expectType<Record<string, unknown>>(customResult);
+
+// Test with a custom function that returns uppercase
+const uppercaseConverter = (key: string): string => key.toUpperCase();
+
+const uppercaseResult = snakecaseKeys({ fooBar: true, barBaz: 'test' }, { snakeCase: uppercaseConverter });
+expectType<Record<string, unknown>>(uppercaseResult);
+
+// Test custom snakeCase with deep option and array
+const arrayResult = snakecaseKeys(
+  [{ fooBar: { barBaz: 'test' } }],
+  { snakeCase: (key) => key.replace(/([A-Z])/g, '_$1').toUpperCase(), deep: true }
+);
+expectType<Array<Record<string, unknown>>>(arrayResult);

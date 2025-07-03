@@ -138,3 +138,21 @@ test('not array of plain objects(instance value)', function (t) {
   )
   t.end()
 })
+
+test('custom snakeCase function', function (t) {
+  const customSnakeCase = (key) => key.replace(/([A-Z])/g, '_$1').toLowerCase()
+  t.deepEqual(
+    Snake({ fooBar: 'baz', barBaz: 'qux' }, { snakeCase: customSnakeCase }),
+    { foo_bar: 'baz', bar_baz: 'qux' }
+  )
+  t.end()
+})
+
+test('custom snakeCase function with nested objects', function (t) {
+  const customSnakeCase = (key) => key.toUpperCase()
+  t.deepEqual(
+    Snake({ fooBar: { barBaz: 'qux' } }, { snakeCase: customSnakeCase }),
+    { FOOBAR: { BARBAZ: 'qux' } }
+  )
+  t.end()
+})
