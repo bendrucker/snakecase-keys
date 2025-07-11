@@ -1,4 +1,4 @@
-# snakecase-keys [![tests](https://github.com/bendrucker/snakecase-keys/workflows/tests/badge.svg?branch=main)](https://github.com/bendrucker/snakecase-keys/actions?query=workflow%3Atests+branch%3Amain)
+# snakecase-keys [![tests](https://github.com/bendrucker/snakecase-keys/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/bendrucker/snakecase-keys/actions?query=workflow%3Atests+branch%3Amain)
 
 > Convert an object's keys to snake case
 
