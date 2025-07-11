@@ -4,7 +4,7 @@
   "main": "./index.js",
   "module": "./index.js",
   "types": "./index.d.ts",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "description": "Convert an object's keys to snake case",
   "license": "MIT",
   "repository": "bendrucker/snakecase-keys",
