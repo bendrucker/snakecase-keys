@@ -19,7 +19,7 @@
     "default": "./index.js"
   },
   "scripts": {
-    "test": "standard && tape test.js && tsd"
+    "test": "standard && node --test test.js && tsd"
   },
   "keywords": [
     "snake",
@@ -30,7 +30,6 @@
   ],
   "devDependencies": {
     "standard": "^17.0.0",
-    "tape": "^5.0.1",
     "tsd": "^0.32.0"
   },
   "files": [
