@@ -30,7 +30,7 @@
   ],
   "devDependencies": {
     "standard": "^17.0.0",
-    "tsd": "^0.32.0"
+    "tsd": "^0.33.0"
   },
   "files": [
     "index.js",
