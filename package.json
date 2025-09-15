@@ -39,7 +39,7 @@
   "dependencies": {
     "change-case": "^5.4.4",
     "map-obj": "^5.0.2",
-    "type-fest": "^4.15.0"
+    "type-fest": "^5.0.0"
   },
   "engines": {
     "node": ">=22"
